@@ -1,15 +1,15 @@
-package com.shark.retrofit.subscriber
+package com.shark.mvvm.retrofit.subscriber
 
 import android.util.Log
 import com.google.gson.JsonSyntaxException
-import com.shark.viewmodel.BaseViewModel
+import com.shark.mvvm.viewmodel.BaseViewModel
 import io.reactivex.observers.DisposableObserver
-import com.shark.config.HttpCode
-import com.shark.exception.BaseException
+import com.shark.mvvm.config.HttpCode
+import com.shark.mvvm.exception.BaseException
 
 
-import com.shark.retrofit.callback.RequestCallback
-import com.shark.retrofit.callback.RequestMultiplyCallback
+import com.shark.mvvm.retrofit.callback.RequestCallback
+import com.shark.mvvm.retrofit.callback.RequestMultiplyCallback
 
 
 /**

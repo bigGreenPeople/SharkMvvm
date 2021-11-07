@@ -1,4 +1,4 @@
-package com.shark.config
+package com.shark.mvvm.config
 
 object HttpCode {
     const val CODE_SUCCESS = "0"

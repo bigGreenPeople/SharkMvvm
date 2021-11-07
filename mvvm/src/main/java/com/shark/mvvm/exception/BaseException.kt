@@ -1,6 +1,6 @@
-package com.shark.exception
+package com.shark.mvvm.exception
 
-import com.shark.config.HttpCode
+import com.shark.mvvm.config.HttpCode
 import java.lang.RuntimeException
 
 open class BaseException : RuntimeException {

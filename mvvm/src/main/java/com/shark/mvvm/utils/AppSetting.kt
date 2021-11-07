@@ -1,13 +1,8 @@
-package com.shark.utils
+package com.shark.mvvm.utils
 
 import android.app.Application
-import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.os.Build
-import android.provider.Settings
-import android.util.Log
-import java.security.NoSuchAlgorithmException
 
 object AppSetting {
     var application: Application? = null

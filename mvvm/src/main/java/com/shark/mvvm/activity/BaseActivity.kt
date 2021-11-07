@@ -16,14 +16,12 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
-import com.mahen.shark.utils.Hide
-import com.shark.activity.KeyBoardMove
-import com.shark.activity.SharkActivity
-import com.shark.event.ScanEvent
-import com.shark.event.ScanEventInfo
-import com.shark.eventbus.EventBusEnabledHandler
-import com.shark.view.TitleListener
-import com.shark.viewmodel.SharkViewModel
+import com.shark.mvvm.utils.Hide
+import com.shark.mvvm.event.ScanEvent
+import com.shark.mvvm.event.ScanEventInfo
+import com.shark.mvvm.eventbus.EventBusEnabledHandler
+import com.shark.mvvm.view.TitleListener
+import com.shark.mvvm.viewmodel.SharkViewModel
 import org.greenrobot.eventbus.EventBus
 import java.lang.RuntimeException
 

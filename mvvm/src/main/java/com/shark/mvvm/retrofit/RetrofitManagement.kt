@@ -1,8 +1,8 @@
-package com.shark.retrofit
+package com.shark.mvvm.retrofit
 
-import com.mahen.rxjavademo.mvvm.exception.ServerResultException
-import com.shark.exception.TokenInvalidException
-import com.shark.retrofit.interceptor.LoggingInterceptor
+import com.shark.mvvm.exception.ServerResultException
+import com.shark.mvvm.exception.TokenInvalidException
+import com.shark.mvvm.retrofit.interceptor.LoggingInterceptor
 import io.reactivex.*
 import java.util.concurrent.ConcurrentHashMap
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,9 +18,9 @@ import io.reactivex.schedulers.Schedulers
 
 import io.reactivex.functions.Function
 import java.lang.Exception
-import com.shark.config.HttpCode
-import com.shark.config.HttpConfig
-import com.shark.retrofit.model.RequestModel
+import com.shark.mvvm.config.HttpCode
+import com.shark.mvvm.config.HttpConfig
+import com.shark.mvvm.retrofit.model.RequestModel
 
 
 object RetrofitManagement {

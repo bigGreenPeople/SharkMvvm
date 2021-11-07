@@ -1,4 +1,4 @@
-package com.shark.fragment
+package com.shark.mvvm.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,8 +12,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.shark.mvvm.activity.BaseActivity
-import com.shark.activity.SharkActivity
-import com.shark.view.TitleListener
+import com.shark.mvvm.activity.SharkActivity
+import com.shark.mvvm.view.TitleListener
 import java.lang.RuntimeException
 
 open class BaseFragment : Fragment(), TitleListener {

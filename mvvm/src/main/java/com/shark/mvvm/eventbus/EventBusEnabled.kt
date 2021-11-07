@@ -1,4 +1,4 @@
-package com.shark.eventbus
+package com.shark.mvvm.eventbus
 
 
 @Target(AnnotationTarget.CLASS)

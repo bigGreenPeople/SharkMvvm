@@ -1,4 +1,4 @@
-package com.shark.retrofit.interceptor
+package com.shark.mvvm.retrofit.interceptor
 
 import android.util.Log
 import com.google.gson.Gson

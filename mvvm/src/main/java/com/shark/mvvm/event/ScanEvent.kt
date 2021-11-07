@@ -1,4 +1,4 @@
-package com.shark.event
+package com.shark.mvvm.event
 
 
 @Target(AnnotationTarget.FUNCTION)

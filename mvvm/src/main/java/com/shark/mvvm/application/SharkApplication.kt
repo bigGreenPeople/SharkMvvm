@@ -1,9 +1,8 @@
-package com.shark.application
+package com.shark.mvvm.application
 
 import android.app.Application
-import android.content.Context
-import com.shark.utils.AppSetting
-import com.shark.utils.DeviceInfo
+import com.shark.mvvm.utils.AppSetting
+import com.shark.mvvm.utils.DeviceInfo
 
 class SharkApplication : Application() {
 

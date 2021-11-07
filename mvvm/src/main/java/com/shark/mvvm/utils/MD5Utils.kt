@@ -1,9 +1,7 @@
-package com.shark.utils
+package com.shark.mvvm.utils
 
-import java.lang.StringBuilder
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import kotlin.experimental.and
 
 @Throws(NoSuchAlgorithmException::class)
 fun toMD5(text: String): String {

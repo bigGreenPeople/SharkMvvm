@@ -1,11 +1,11 @@
-package com.shark.retrofit
+package com.shark.mvvm.retrofit
 
-import com.shark.exception.BaseException
-import com.shark.viewmodel.BaseViewModel
-import com.shark.retrofit.callback.RequestCallback
-import com.shark.retrofit.callback.RequestMultiplyCallback
-import com.shark.retrofit.model.RequestModel
-import com.shark.retrofit.subscriber.BaseRemoteSubscriber
+import com.shark.mvvm.exception.BaseException
+import com.shark.mvvm.viewmodel.BaseViewModel
+import com.shark.mvvm.retrofit.callback.RequestCallback
+import com.shark.mvvm.retrofit.callback.RequestMultiplyCallback
+import com.shark.mvvm.retrofit.model.RequestModel
+import com.shark.mvvm.retrofit.subscriber.BaseRemoteSubscriber
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.ObservableTransformer

@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">SharkMvvm</string>
+    <string name="app_name">NidecRead</string>
+    <string name="user">&#xe60e;</string>
+    <string name="pswd">&#xe611;</string>
+    <string name="icon_back">&#xe646;</string>
+    <string name="down">&#xe68f;</string>
+    <string name="SetOf">&#xe692;</string>
+    <string name="off">&#xe62f;</string>
+    <string name="on">&#xe62d;</string>
+
+
+    <string name="service_type">服务类型<font color='#f72228'>*</font></string>
+    <string name="service_title">服务简称<font color='#f72228'>*</font></string>
+    <string name="overtime">超时时间<font color='#f72228'>*</font></string>
+    <string name="service">服务地址<font color='#f72228'>*</font></string>
 </resources>

@@ -1,4 +1,4 @@
-package com.shark.viewmodel
+package com.shark.mvvm.viewmodel
 
 /**
  * 此类用于抽象消息

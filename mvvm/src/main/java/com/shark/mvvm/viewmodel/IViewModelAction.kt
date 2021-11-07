@@ -1,7 +1,7 @@
-package com.shark.viewmodel
+package com.shark.mvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.shark.viewmodel.BaseActionEvent
+import com.shark.mvvm.viewmodel.BaseActionEvent
 
 
 interface IViewModelAction {

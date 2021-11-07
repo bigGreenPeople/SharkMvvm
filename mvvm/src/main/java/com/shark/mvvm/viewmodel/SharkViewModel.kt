@@ -1,4 +1,4 @@
-package com.shark.viewmodel
+package com.shark.mvvm.viewmodel
 
 /**
  * 此方法标志的属性不能使用 lateinit

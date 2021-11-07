@@ -1,8 +1,8 @@
-package com.shark.spread
+package com.shark.mvvm.spread
 
 import android.text.TextUtils
 import android.widget.Toast
-import com.shark.utils.AppSetting
+import com.shark.mvvm.utils.AppSetting
 
 const val TAG = "SharkChilli"
 

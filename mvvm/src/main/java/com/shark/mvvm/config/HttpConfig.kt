@@ -1,4 +1,4 @@
-package com.shark.config
+package com.shark.mvvm.config
 
 object HttpConfig {
     //TODO 这里写成动态获取

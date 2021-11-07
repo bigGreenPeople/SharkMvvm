@@ -1,7 +1,7 @@
-package com.shark.view
+package com.shark.mvvm.view
 
 import android.view.View
-import com.shark.activity.SharkActivity
+import com.shark.mvvm.activity.SharkActivity
 
 /**
  * 此接口为标题导航接口

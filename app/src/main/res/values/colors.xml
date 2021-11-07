@@ -7,4 +7,22 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#DE2527</color>
+    <color name="f5">#f5f5f5</color>
+    <color name="yellow">#eca832</color>
+
+    <drawable name="btn_focused">#ff0000</drawable>
+    <drawable name="btn_normal">#DE2527</drawable>
+    <color name="btn_login">#30A3FA</color>
+    <!--    透明色-->
+    <color name="transparent">#00000000</color>
+    <color name="login_ip">#A0A0A0</color>
+    <color name="btn_login_2">#45adea</color>
+    <color name="change_blue">#7BCBFF</color>
+    <color name="background">#f2f2f2</color>
+
+    <color name="ccc">#cccccc</color>
+    <color name="black_text">#1f1f1f</color>
+    <color name="bluish_grey">#596d94</color>
+
 </resources>

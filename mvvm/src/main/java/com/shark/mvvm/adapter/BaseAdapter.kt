@@ -1,14 +1,12 @@
-package com.shark.adapter
+package com.shark.mvvm.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
 
 abstract class BaseAdapter<T, TBinding : ViewDataBinding>(
     var itemList: List<T>,

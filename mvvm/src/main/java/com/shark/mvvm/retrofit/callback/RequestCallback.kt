@@ -1,6 +1,6 @@
-package com.shark.retrofit.callback
+package com.shark.mvvm.retrofit.callback
 
-import com.shark.exception.BaseException
+import com.shark.mvvm.exception.BaseException
 
 interface RequestCallback<T> {
     fun onSuccess(t: T)

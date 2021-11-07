@@ -1,7 +1,7 @@
-package com.shark.event
+package com.shark.mvvm.event
 
+import com.shark.mvvm.event.ScanEvent
 import java.lang.reflect.Method
-import kotlin.reflect.KFunction
 
 /**
  * 扫描方法信息

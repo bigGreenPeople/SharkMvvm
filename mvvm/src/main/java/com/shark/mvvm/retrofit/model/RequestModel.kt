@@ -1,4 +1,4 @@
-package com.shark.retrofit.model
+package com.shark.mvvm.retrofit.model
 
 data class RequestModel<T>(
     val type: String,

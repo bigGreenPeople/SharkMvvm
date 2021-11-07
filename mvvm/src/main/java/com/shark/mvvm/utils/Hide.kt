@@ -1,4 +1,4 @@
-package com.mahen.shark.utils
+package com.shark.mvvm.utils
 
 import android.content.Context
 import android.os.IBinder

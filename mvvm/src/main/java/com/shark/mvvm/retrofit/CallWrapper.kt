@@ -1,17 +1,13 @@
-package com.shark.retrofit
+package com.shark.mvvm.retrofit
 
 import android.app.Activity
-import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.zyao89.view.zloading.ZLoadingDialog
 import com.zyao89.view.zloading.Z_TYPE
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 @Deprecated("Please Use RetrofitManagement")
 class CallWrapper<T>(val mContext: Activity, val mCall: Call<T>) {

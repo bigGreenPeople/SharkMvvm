@@ -1,6 +1,6 @@
-package com.shark.retrofit
+package com.shark.mvvm.retrofit
 
-import com.shark.retrofit.interceptor.LoggingInterceptor
+import com.shark.mvvm.retrofit.interceptor.LoggingInterceptor
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

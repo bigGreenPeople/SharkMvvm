@@ -1,8 +1,7 @@
-package com.shark.utils
+package com.shark.mvvm.utils
 
 import android.app.Application
 import android.content.Context
-import android.net.wifi.WifiInfo
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.util.Log

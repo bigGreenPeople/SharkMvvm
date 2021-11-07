@@ -1,12 +1,11 @@
-package com.shark.activity
+package com.shark.mvvm.activity
 
 import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
-import com.shark.mvvm.activity.BaseActivity
-import com.shark.viewmodel.BaseActionEvent
-import com.shark.viewmodel.BaseViewModel
-import com.shark.viewmodel.SharkViewModel
+import com.shark.mvvm.viewmodel.BaseActionEvent
+import com.shark.mvvm.viewmodel.BaseViewModel
+import com.shark.mvvm.viewmodel.SharkViewModel
 import com.zyao89.view.zloading.ZLoadingDialog
 import com.zyao89.view.zloading.Z_TYPE
 import java.lang.RuntimeException

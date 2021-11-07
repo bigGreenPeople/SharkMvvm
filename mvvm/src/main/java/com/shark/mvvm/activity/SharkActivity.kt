@@ -1,4 +1,4 @@
-package com.shark.activity
+package com.shark.mvvm.activity
 
 
 @Target(AnnotationTarget.CLASS)

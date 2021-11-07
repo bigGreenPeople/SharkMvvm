@@ -1,4 +1,4 @@
-package com.shark.spread
+package com.shark.mvvm.spread
 
 import android.app.AlertDialog
 import android.content.Context

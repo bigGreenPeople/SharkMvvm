@@ -1,4 +1,4 @@
-package com.shark.retrofit
+package com.shark.mvvm.retrofit
 
 /**
  * 作为任务的调度器(我们可以随时更改remoteDataSource的实现)主要用来存一下remoteDataSource的引用

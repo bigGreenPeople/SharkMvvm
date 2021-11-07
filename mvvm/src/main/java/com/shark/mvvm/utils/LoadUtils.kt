@@ -1,4 +1,4 @@
-package com.shark.utils
+package com.shark.mvvm.utils
 
 import android.app.Activity
 import android.graphics.Color
