@@ -7,5 +7,4 @@ package com.shark.mvvm.activity
 annotation class SharkActivity(
     val layoutId: Int,          //布局id
     val back: Boolean = true,    //显示返回界面
-    val activityId:Int = 0      //是否自动注入 activity到DataBinding
 )

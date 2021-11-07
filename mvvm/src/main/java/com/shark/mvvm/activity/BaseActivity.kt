@@ -163,9 +163,6 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
                 it.set(this, DataBindingUtil.setContentView(this, sharkActivity!!.layoutId))
                 //设置页面
                 val viewDataBinding: ViewDataBinding = it.get(this) as ViewDataBinding
-                if (sharkActivity!!.activityId != 0) {
-                    viewDataBinding.setVariable(sharkActivity!!.activityId, this)
-                }
                 return viewDataBinding
             }
         }

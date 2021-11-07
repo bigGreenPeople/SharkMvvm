@@ -72,9 +72,6 @@ open class BaseFragment : Fragment(), TitleListener {
                 //设置页面
                 val viewDataBinding: ViewDataBinding = it.get(this) as ViewDataBinding
 //                viewDataBinding.setVariable(BR.fragment, this)
-                if (sharkActivity!!.activityId != 0) {
-                    viewDataBinding.setVariable(sharkActivity!!.activityId, this)
-                }
                 return viewDataBinding
             }
         }
