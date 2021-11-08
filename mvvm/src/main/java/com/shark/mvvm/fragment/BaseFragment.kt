@@ -19,6 +19,7 @@ import java.lang.RuntimeException
 open class BaseFragment : Fragment(), TitleListener {
     val TAG = "SharkChilli"
     override var sharkActivity: SharkActivity? = null
+    var viewDataBinding: ViewDataBinding? = null
 
 
     init {
@@ -40,6 +41,7 @@ open class BaseFragment : Fragment(), TitleListener {
 
         val mDataBinding =
             initDataBinding(inflater, container, savedInstanceState)
+        viewDataBinding = mDataBinding
         //设置生命周期监听
         mDataBinding.lifecycleOwner = this
 
