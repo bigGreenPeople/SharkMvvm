@@ -4,7 +4,7 @@ import com.shark.mvvm.exception.BaseException
 import com.shark.mvvm.viewmodel.BaseViewModel
 import com.shark.mvvm.retrofit.callback.RequestCallback
 import com.shark.mvvm.retrofit.callback.RequestMultiplyCallback
-import com.shark.mvvm.retrofit.model.RequestModel
+import com.shark.mvvm.retrofit.model.BaseRequestModel
 import com.shark.mvvm.retrofit.subscriber.BaseRemoteSubscriber
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -15,6 +15,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
 import java.util.concurrent.TimeUnit
 
 
@@ -43,20 +44,20 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
 
     /**
      * 实际调用请求
-     * @return ObservableTransformer<RequestModel<T>, T>?
+     * @return ObservableTransformer<BaseRequestModel<T>, T>?
      */
-    open fun <T> applySchedulers(): ObservableTransformer<RequestModel<T>, T>? {
+    open fun <T> applySchedulers(): ObservableTransformer<BaseRequestModel<T>, T>? {
         return RetrofitManagement.applySchedulers()
     }
 
     /**
      * 调用完网络接口后会获得Observable对象
      * 这里我们将baseViewModel 和 callback封装为BaseRemoteSubscriber订阅者
-     * @param observable Observable<RequestModel<T>>
+     * @param observable Observable<BaseRequestModel<T>>
      * @param callback RequestCallback<T>?
      */
     protected open fun <T> execute(
-        observable: Observable<RequestModel<T>>,
+        observable: Observable<BaseRequestModel<T>>,
         callback: RequestCallback<T>?
     ) {
         execute(observable, BaseRemoteSubscriber(baseViewModel, callback), true)
@@ -64,11 +65,11 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
 
     /**
      * 表达式支持
-     * @param observable Observable<RequestModel<T>>
+     * @param observable Observable<BaseRequestModel<T>>
      * @param callback Function1<[@kotlin.ParameterName] T, Unit>?
      */
-    protected open fun <T> execute(
-        observable: Observable<RequestModel<T>>,
+    protected open fun <T, M : BaseRequestModel<T>> execute(
+        observable: Observable<M>,
         failCallback: ((e: BaseException?) -> Unit)? = null,
         successCallback: ((result: T) -> Unit)? = null
     ) {
@@ -100,14 +101,14 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
     }
 
     protected open fun <T> execute(
-        observable: Observable<RequestModel<T>>,
+        observable: Observable<BaseRequestModel<T>>,
         callback: RequestMultiplyCallback<T>?
     ) {
         execute(observable, BaseRemoteSubscriber(baseViewModel, callback), true)
     }
 
     open fun <T> executeWithoutDismiss(
-        observable: Observable<RequestModel<T>>,
+        observable: Observable<BaseRequestModel<T>>,
         observer: Observer<T>
     ) {
         execute(observable, observer, false)
@@ -116,12 +117,12 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
     /**
      * 让获取数据的操作在IO线程上执行
      * 更新ui的操作在ui线程上执行
-     * @param observable Observable<RequestModel<T>>
+     * @param observable Observable<BaseRequestModel<T>>
      * @param observer Observer<T>
      * @param isDismiss Boolean
      */
-    open fun <T> execute(
-        observable: Observable<RequestModel<T>>,
+    open fun <T, M : BaseRequestModel<T>> execute(
+        observable: Observable<M>,
         observer: Observer<T>,
         isDismiss: Boolean
     ) {

@@ -14,7 +14,6 @@ import com.shark.sharkmvvm.viewmodel.LoginViewModel
 
 
 @SuppressLint("NonConstantResourceId")
-@KeyBoardMove(moveId = R.id.main, moveToId = R.id.ll_top)
 @SharkActivity(layoutId = R.layout.activity_login)
 class LoginActivity : MvvmActivity() {
     var mDataBinding: ActivityLoginBinding? = null
@@ -43,7 +42,7 @@ class LoginActivity : MvvmActivity() {
      * @param view View
      */
     fun login(view: View) {
-
+        loginViewModel?.test()
     }
 
     /**
@@ -53,17 +52,4 @@ class LoginActivity : MvvmActivity() {
     fun jumpSetting(view: View) {
     }
 
-    /**
-     * 选择事件
-     * @param view View
-     */
-    fun select(view: View) {
-        mDataBinding?.spSob?.performClick()
-    }
-
-    @ScanEvent(id = R.id.et_user)
-    fun testScan(code:String){
-        Log.i(TAG, "testScan: $code")
-        getSOB(code)
-    }
 }

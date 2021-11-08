@@ -20,7 +20,7 @@ import io.reactivex.functions.Function
 import java.lang.Exception
 import com.shark.mvvm.config.HttpCode
 import com.shark.mvvm.config.HttpConfig
-import com.shark.mvvm.retrofit.model.RequestModel
+import com.shark.mvvm.retrofit.model.BaseRequestModel
 
 
 object RetrofitManagement {
@@ -66,12 +66,12 @@ object RetrofitManagement {
      * 在交给监听者前flatMap会对数据进行过滤 (此处主要是用于返回值的统一判断)错误的返回值抛出异常
      * @return ObservableTransformer<RequestModel<T>, T>?
      */
-    fun <T> applySchedulers(): ObservableTransformer<RequestModel<T>, T>? {
-        return ObservableTransformer<RequestModel<T>, T> { observable: Observable<RequestModel<T>> ->
+    fun <T, M : BaseRequestModel<T>> applySchedulers(): ObservableTransformer<M, T>? {
+        return ObservableTransformer<M, T> { observable: Observable<M> ->
             observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(Function<RequestModel<T>, ObservableSource<out T>> { result: RequestModel<T> ->
+                .flatMap(Function<M, ObservableSource<out T>> { result: M ->
                     when (result.type) {
                         HttpCode.CODE_SUCCESS -> {
                             //如果成功则创建数据被观察者
@@ -81,7 +81,10 @@ object RetrofitManagement {
                             throw TokenInvalidException()
                         }
                         else -> {
-                            throw ServerResultException(result.type, result.msg)
+                            throw ServerResultException(
+                                result.type,
+                                result.msg
+                            )
                         }
                     }
                 })

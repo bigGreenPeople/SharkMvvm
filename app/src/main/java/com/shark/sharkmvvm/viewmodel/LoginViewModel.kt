@@ -8,7 +8,9 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.shark.mvvm.spread.TAG
 import com.shark.mvvm.viewmodel.BaseViewModel
+import com.shark.sharkmvvm.datasource.UserDataSource
 import java.util.*
 
 //用户信息 SharedPreferences名称
@@ -17,6 +19,7 @@ const val LAST_USERNAME = "last_username"
 
 
 class LoginViewModel(application: Application) : BaseViewModel(application) {
+    private var userDataSource = UserDataSource(this)
 
 
     //共享文件
@@ -25,8 +28,12 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
 
     init {
         //显示最后登录的用户名称
-
     }
 
+    fun test() {
+        userDataSource.shopOrders {
+            Log.i(TAG, "test: $it")
+        }
+    }
 
 }

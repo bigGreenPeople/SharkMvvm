@@ -4,7 +4,7 @@ import android.app.Application
 import com.shark.mvvm.utils.AppSetting
 import com.shark.mvvm.utils.DeviceInfo
 
-class SharkApplication : Application() {
+open class SharkApplication : Application() {
 
 
     override fun onCreate() {
