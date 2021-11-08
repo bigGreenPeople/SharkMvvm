@@ -32,6 +32,7 @@ import java.lang.RuntimeException
 open class BaseActivity : AppCompatActivity(), TitleListener {
     val TAG = "SharkChilli"
     override var sharkActivity: SharkActivity? = null
+    var viewDataBinding: ViewDataBinding? = null
 
     //所有扫描注解的方法都存在这个list中
     private val listScanEventInfo: MutableList<ScanEventInfo> = mutableListOf()
@@ -70,7 +71,6 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
         )
     }
 
-
     /**
      * 初始化公共操作
      */
@@ -81,6 +81,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
 
         sharkActivity?.let {
             val initDataBinding = initDataBinding()
+            viewDataBinding = initDataBinding
             initDataBinding.lifecycleOwner = this
         }
 
