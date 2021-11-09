@@ -7,7 +7,6 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface ProductService {
-    //点检保养确认
     @GET("cashRegister/commodityPrices")
     fun shopOrders(): Observable<RequestModel<List<Goods>>>
 
