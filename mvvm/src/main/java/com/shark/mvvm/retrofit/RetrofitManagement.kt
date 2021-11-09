@@ -124,11 +124,14 @@ object RetrofitManagement {
      */
     fun <T> getService(clz: Class<T>, host: String): T {
         val value: T
-        if (serviceMap.containsKey(host)) {
-            val obj = serviceMap[host]
+        //生成key
+        val key = "${host}_${clz.name}"
+
+        if (serviceMap.containsKey(key)) {
+            val obj = serviceMap[key]
             if (obj == null) {
                 value = createRetrofit(host)!!.create(clz)
-                serviceMap[host] = value!!
+                serviceMap[key] = value!!
             } else {
                 value = obj as T
             }

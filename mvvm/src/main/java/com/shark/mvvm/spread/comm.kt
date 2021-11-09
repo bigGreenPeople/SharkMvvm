@@ -1,6 +1,7 @@
 package com.shark.mvvm.spread
 
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Toast
 import com.shark.mvvm.utils.AppSetting
 
@@ -11,6 +12,14 @@ const val TAG = "SharkChilli"
 fun String.showToast(duration: Int = Toast.LENGTH_SHORT) {
     //MyApplication 这是一个直接获取全局context的类
     Toast.makeText(AppSetting.application, this, Toast.LENGTH_SHORT).show()
+}
+
+/**
+ * 打印日志
+ * @receiver String
+ */
+fun String.log() {
+    Log.i(TAG, this)
 }
 
 /**
