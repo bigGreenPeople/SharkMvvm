@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.shark.mvvm.activity.BaseActivity
 import com.shark.mvvm.activity.SharkActivity
 import com.shark.mvvm.view.TitleListener
+import com.shark.mvvm.viewmodel.SharkViewModel
 import java.lang.RuntimeException
 
 open class BaseFragment : Fragment(), TitleListener {
@@ -39,14 +40,34 @@ open class BaseFragment : Fragment(), TitleListener {
             savedInstanceState
         )
 
+        //注入ViewModel值
+        injectionViewModel()
+
         val mDataBinding =
             initDataBinding(inflater, container, savedInstanceState)
         viewDataBinding = mDataBinding
         //设置生命周期监听
         mDataBinding.lifecycleOwner = this
 
+
         initView()
         return mDataBinding.root
+    }
+
+    /**
+     * 注入ViewModel
+     */
+    private fun injectionViewModel() {
+        // 扫描出本类所有@SharkViewModel 设置值
+        this::class.java.declaredFields.forEach {
+            it.isAccessible = true
+//            val annotation = it.getAnnotation(SharkViewModel::class.java)
+            if (it.isAnnotationPresent(SharkViewModel::class.java)) {
+                val viewModel = getViewModel(it.type as Class<ViewModel>)
+                Log.i(TAG, "injectionViewModel: $viewModel")
+                it.set(this, viewModel)
+            }
+        }
     }
 
     /**
