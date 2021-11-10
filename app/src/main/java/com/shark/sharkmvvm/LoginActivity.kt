@@ -8,6 +8,7 @@ import com.shark.mvvm.activity.MvvmActivity
 import com.shark.mvvm.activity.SharkActivity
 import com.shark.mvvm.event.ScanEvent
 import com.shark.mvvm.spread.isEmpty
+import com.shark.mvvm.utils.setTimeout
 import com.shark.mvvm.viewmodel.SharkViewModel
 import com.shark.sharkmvvm.databinding.ActivityLoginBinding
 import com.shark.sharkmvvm.viewmodel.LoginViewModel
@@ -42,6 +43,9 @@ class LoginActivity : MvvmActivity() {
      * @param view View
      */
     fun login(view: View) {
+//        setTimeout {
+//            loginViewModel?.test()
+//        }
         loginViewModel?.test()
     }
 

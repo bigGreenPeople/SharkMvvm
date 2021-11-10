@@ -12,7 +12,8 @@ class UserDataSource(baseViewModel: BaseViewModel) : BaseRemoteDataSource(baseVi
     ) {
         execute(
             getService(ProductService::class.java).shopOrders(),
-            successCallback = successCallback
+            isLoad = false,
+            successCallback = successCallback,
         )
     }
 }

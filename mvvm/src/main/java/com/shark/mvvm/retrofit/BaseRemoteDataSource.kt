@@ -70,6 +70,8 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
      */
     protected open fun <T, M : BaseRequestModel<T>> execute(
         observable: Observable<M>,
+        isDismiss: Boolean = true,
+        isLoad: Boolean = true,
         failCallback: ((e: BaseException?) -> Unit)? = null,
         successCallback: ((result: T) -> Unit)? = null
     ) {
@@ -96,7 +98,8 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
         execute(
             observable,
             BaseRemoteSubscriber(baseViewModel, callback),
-            true
+            isDismiss,
+            isLoad
         )
     }
 
@@ -119,12 +122,14 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
      * 更新ui的操作在ui线程上执行
      * @param observable Observable<BaseRequestModel<T>>
      * @param observer Observer<T>
-     * @param isDismiss Boolean
+     * @param isDismiss Boolean 是否加载错误后自动关闭load
+     * @param isLoad Boolean 是否自动加载
      */
     open fun <T, M : BaseRequestModel<T>> execute(
         observable: Observable<M>,
         observer: Observer<T>,
-        isDismiss: Boolean
+        isDismiss: Boolean,
+        isLoad: Boolean = true
     ) {
         addDisposable(
             observable
@@ -133,7 +138,12 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(applySchedulers())
-                .compose(if (isDismiss) loadingTransformer<T>() else loadingTransformerWithoutDismiss<T>())
+                .compose(
+                    if (isDismiss) loadingTransformer<T>(isLoad) else loadingTransformerWithoutDismiss<T>(
+                        isLoad
+                    )
+                )
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(observer) as Disposable
         )
     }
@@ -160,24 +170,24 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
      * 在订阅时加载 订阅后关闭
      * @return ObservableTransformer<T, T>?
      */
-    open fun <T> loadingTransformer(): ObservableTransformer<T, T>? {
+    open fun <T> loadingTransformer(isLoad: Boolean = true): ObservableTransformer<T, T>? {
         return ObservableTransformer { observable: Observable<T> ->
             observable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { disposable: Disposable? -> startLoading() }
+                .doOnSubscribe { disposable: Disposable? -> if (isLoad) startLoading() }
                 .doFinally { dismissLoading() }
         }
     }
 
-    open fun <T> loadingTransformerWithoutDismiss(): ObservableTransformer<T, T>? {
+    open fun <T> loadingTransformerWithoutDismiss(isLoad: Boolean = true): ObservableTransformer<T, T>? {
         return ObservableTransformer { observable: Observable<T> ->
             observable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { disposable: Disposable? -> startLoading() }
+                .doOnSubscribe { disposable: Disposable? -> if (isLoad) startLoading() }
         }
     }
 }
