@@ -78,6 +78,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
 }
 
+// 打包源码
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+
 afterEvaluate {
     publishing {
         publications {
@@ -89,22 +96,8 @@ afterEvaluate {
                 groupId = 'com.shark.mvvm'
                 artifactId = 'msharkmvvm'
                 version = '1.0'
+                artifact sourcesJar
             }
         }
     }
-}
-
-// 指定编码
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
-}
-
-// 打包源码
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-artifacts {
-    archives sourcesJar
 }
