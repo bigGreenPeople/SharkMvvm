@@ -16,17 +16,55 @@
             type="com.shark.sharkmvvm.LoginActivity" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
         <Button
             android:id="@+id/button"
-            android:onClick="login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
-    </RelativeLayout>
+            android:onClick="login"
+            android:text="你好" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="16dp"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            android:textDirection="locale">
+
+            <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="输入密码"
+                android:layoutDirection="locale"
+                android:textAlignment="viewStart"
+                app:pet_enableIconAlpha="true"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.xuexiang.xui.widget.edittext.PasswordEditText
+            android:id="@+id/input_password2"
+            fontPath="fonts/Roboto-Thin.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="8dp"
+            android:gravity="start"
+            android:hint="重复密码"
+            android:inputType="textPassword"
+            android:textAlignment="viewStart"
+            app:pet_enableIconAlpha="true"
+            app:pet_hoverShowsPw="true" />
+
+    </LinearLayout>
 </layout>

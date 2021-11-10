@@ -1,5 +1,6 @@
 package com.shark.mvvm.activity
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
