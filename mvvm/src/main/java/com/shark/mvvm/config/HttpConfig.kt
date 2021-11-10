@@ -1,7 +1,6 @@
 package com.shark.mvvm.config
 
 object HttpConfig {
-    //TODO 这里写成动态获取
     var BASE_URL_WEATHER: String? = "http://digitinterface.qlaisoft.com/api/pda/"
 
     val HTTP_REQUEST_TYPE_KEY = "requestType"

@@ -44,32 +44,27 @@ public class MyTextView extends TextView {
 //    @SuppressLint("NewApi")
 //    public MyTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 //        super(context, attrs, defStyleAttr, defStyleRes);
-//        // TODO Auto-generated constructor stub
 //        init(context);
 ////		initAttributeSet(context, attrs);
 //    }
     public MyTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        // TODO Auto-generated constructor stub
         init(context);
 //		initAttributeSet(context, attrs);
     }
 
     public MyTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        // TODO Auto-generated constructor stub
         init(context);
 //		initAttributeSet(context, attrs);
     }
 
     public MyTextView(Context context) {
         super(context);
-        // TODO Auto-generated constructor stub
         init(context);
     }
 
     private void init(Context context) {
-        // TODO Auto-generated method stub
 //        Typeface iconfont = Typeface.createFromAsset(context.getAssets(), "iconfont/iconfont.ttf");
         Typeface iconfont = Typeface.createFromAsset(context.getAssets(), "iconfont.ttf");
         setTypeface(iconfont);

@@ -48,7 +48,6 @@ object RetrofitManagement {
             .connectTimeout(CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
             .addInterceptor(LoggingInterceptor())
             .retryOnConnectionFailure(true)
-        //TODO debug 添加不同的Interceptor
 //        if (BuildConfig.DEBUG) {
 //            builder.addInterceptor(LoggingInterceptor())
 //        }
