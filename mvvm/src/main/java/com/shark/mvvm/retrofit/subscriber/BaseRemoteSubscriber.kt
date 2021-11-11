@@ -13,16 +13,21 @@ import com.shark.mvvm.retrofit.callback.RequestMultiplyCallback
 
 
 /**
- * 订阅者 或者叫 监听者
+ * 订阅者 或者叫 监听者 (一次请求会创建一个BaseRemoteSubscriber)
  * @param T
  */
 class BaseRemoteSubscriber<T>(
     private val baseViewModel: BaseViewModel,
     var requestCallback: RequestCallback<T>? = null
 ) : DisposableObserver<T>() {
+    /**
+     * 查看是否执行了任一onNext或者onError
+     */
+    var isExecute: Boolean = false
 
     //成功执行设置的回调
     override fun onNext(t: T) {
+        isExecute = true
         requestCallback?.onSuccess(t)
     }
 
@@ -33,6 +38,7 @@ class BaseRemoteSubscriber<T>(
      */
     override fun onError(e: Throwable) {
         Log.i("BaseSubscriber", "onError: ", e)
+        isExecute = true
 
         if (requestCallback is RequestMultiplyCallback) {
             val callback = requestCallback as RequestMultiplyCallback
@@ -52,5 +58,6 @@ class BaseRemoteSubscriber<T>(
     }
 
     override fun onComplete() {
+        if (!isExecute) requestCallback?.onSuccess("" as T)
     }
 }
