@@ -6,6 +6,7 @@ import com.shark.mvvm.viewmodel.BaseViewModel
 import io.reactivex.observers.DisposableObserver
 import com.shark.mvvm.config.HttpCode
 import com.shark.mvvm.exception.BaseException
+import com.shark.mvvm.exception.ServerResultException
 
 
 import com.shark.mvvm.retrofit.callback.RequestCallback
@@ -52,6 +53,8 @@ class BaseRemoteSubscriber<T>(
             if (e is JsonSyntaxException) {
                 baseViewModel.showToast("服务器返回数据格式异常")
 
+            } else if (e is ServerResultException) {
+                baseViewModel.showToast("请求失败:" + (e as ServerResultException).errorMessage)
             } else
                 baseViewModel.showToast("服务器返回异常:" + e.message)
         }

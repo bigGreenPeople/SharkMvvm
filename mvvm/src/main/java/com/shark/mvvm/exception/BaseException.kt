@@ -8,8 +8,12 @@ open class BaseException : RuntimeException {
     var errorCode: String = HttpCode.CODE_UNKNOWN
         private set
 
+    var errorMessage: String? = null
+
     constructor() {}
     constructor(errorCode: String, errorMessage: String?) : super(errorMessage) {
         this.errorCode = errorCode
+        this.errorMessage = errorMessage
+
     }
 }
