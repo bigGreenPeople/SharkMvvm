@@ -98,7 +98,7 @@ object RetrofitManagement {
     private fun <T> createData(t: T): Observable<T>? {
         return Observable.create { emitter ->
             try {
-                emitter.onNext(t)
+                t?.let { emitter.onNext(t) }
                 emitter.onComplete()
             } catch (e: Exception) {
                 emitter.onError(e)
