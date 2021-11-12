@@ -22,7 +22,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
+        <com.xuexiang.xui.widget.actionbar.TitleBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tb_barHeight="40dp"
+            app:tb_leftImageResource="@drawable/back1"
+            app:tb_titleText="这是一个Title"
+            app:tb_titleTextSize="18dp" />
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"

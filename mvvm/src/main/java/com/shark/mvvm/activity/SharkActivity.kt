@@ -7,4 +7,5 @@ package com.shark.mvvm.activity
 annotation class SharkActivity(
     val layoutId: Int,          //布局id
     val back: Boolean = true,    //显示返回界面
+    val title: String = ""    //标题
 )
