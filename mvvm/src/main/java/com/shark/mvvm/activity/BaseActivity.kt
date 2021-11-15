@@ -31,6 +31,8 @@ import java.lang.RuntimeException
 
 open class BaseActivity : AppCompatActivity(), TitleListener {
     val TAG = "SharkChilli"
+    var mTitleText: String = ""
+
     override var sharkActivity: SharkActivity? = null
     var viewDataBinding: ViewDataBinding? = null
 
@@ -40,7 +42,10 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
     init {
         //获取SharkActivity注解类
         this::class.annotations.find { it is SharkActivity }
-            ?.let { sharkActivity = it as SharkActivity }
+            ?.let {
+                sharkActivity = it as SharkActivity
+            }
+        sharkActivity?.let { mTitleText = it.title }
         //解析Activity扫描方法
         setScanEventListener(this)
     }
