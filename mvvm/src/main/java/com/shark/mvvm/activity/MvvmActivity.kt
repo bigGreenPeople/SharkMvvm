@@ -99,9 +99,9 @@ abstract class MvvmActivity : BaseActivity() {
         loadingDialog.dismiss()
     }
 
-    protected open fun showToast(message: String?) {
+    protected open fun showToast(message: String?, titleText: String = "提示") {
 //        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        message?.let { alertDialog(it) }
+        message?.let { alertDialog(titleText, it) }
     }
 
     protected open fun finishWithResultOk() {

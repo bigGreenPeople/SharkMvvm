@@ -15,7 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import cn.pedant.SweetAlert.SweetAlertDialog
+import com.shark.mvvm.R
 import com.shark.mvvm.utils.Hide
 import com.shark.mvvm.event.ScanEvent
 import com.shark.mvvm.event.ScanEventInfo
@@ -24,6 +24,9 @@ import com.shark.mvvm.view.TitleListener
 import com.shark.mvvm.viewmodel.SharkViewModel
 import org.greenrobot.eventbus.EventBus
 import java.lang.RuntimeException
+
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog
+
 
 /**
  * 此类用于处理Activity的一些公共处理
@@ -266,35 +269,47 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
     /**
      * 显示简单弹框
      * @param titleText String
+     * @param content String
      * @param confirm String
      */
-    fun alertDialog(titleText: String, confirm: String = "好的") {
-        SweetAlertDialog(this).apply {
-            this.titleText = titleText
-            confirmText = confirm
-            contentText = ""
-            show()
-        }
+    fun alertDialog(titleText: String = "提示", content: String = "", confirm: String = "好的") {
+        MaterialDialog.Builder(this)
+            .iconRes(R.drawable.icon_tip)
+            .title(titleText)
+            .content(content)
+            .positiveText(confirm)
+            .show()
     }
 
     /**
      * 弹出警告
      * @param titleText String
+     * @param content String
      * @param confirm String
+     * @param cancel String
+     * @param cancelClick Function0<Unit>?
+     * @param okClick Function0<Unit>?
      */
-    fun alertWarning(titleText: String, confirm: String = "确定", cancelClick: (() -> Unit)? = null) {
-        SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE).apply {
-            this.titleText = titleText
-            confirmText = confirm
-            contentText = ""
-            //设置事件
-//            setCancelClickListener { cancelClick?.invoke() }
-            setConfirmClickListener {
+    fun alertWarning(
+        titleText: String = "警告",
+        content: String = "",
+        confirm: String = "确定",
+        cancel: String = "取消",
+        cancelClick: (() -> Unit)? = null,
+        okClick: (() -> Unit)? = null
+    ) {
+        MaterialDialog.Builder(this)
+            .iconRes(R.drawable.icon_warning)
+            .title(titleText)
+            .content(content)
+            .positiveText(confirm)
+            .negativeText(cancel)
+            .onNegative { dialog, which ->
                 cancelClick?.invoke()
-                cancel()
+            }.onPositive { dialog, which ->
+                okClick?.invoke()
             }
-            show()
-        }
+            .show()
     }
 
     /**

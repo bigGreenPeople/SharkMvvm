@@ -8,6 +8,7 @@ import com.shark.mvvm.activity.MvvmActivity
 import com.shark.mvvm.activity.SharkActivity
 import com.shark.mvvm.event.ScanEvent
 import com.shark.mvvm.spread.isEmpty
+import com.shark.mvvm.spread.showToast
 import com.shark.mvvm.utils.setTimeout
 import com.shark.mvvm.viewmodel.SharkViewModel
 import com.shark.sharkmvvm.databinding.ActivityLoginBinding
@@ -46,7 +47,15 @@ class LoginActivity : MvvmActivity() {
 //        setTimeout {
 //            loginViewModel?.test()
 //        }
-        loginViewModel?.test()
+//        loginViewModel?.test()
+        alertWarning("警告", "是否确定",
+            cancelClick = {
+                "取消点击".showToast()
+            },
+            okClick = {
+                "确定点击".showToast()
+
+            })
     }
 
     /**
