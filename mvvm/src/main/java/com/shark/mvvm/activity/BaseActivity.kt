@@ -247,7 +247,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
 
         cleanEdit = false
         val cleanEditText = findViewById<EditText>(cleanId!!)
-        cleanEditText.setText("")
+        cleanEditText?.setText("")
     }
 
     /**
