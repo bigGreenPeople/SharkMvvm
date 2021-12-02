@@ -16,6 +16,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.shark.mvvm.R
+import com.shark.mvvm.event.CleanModel
 import com.shark.mvvm.utils.Hide
 import com.shark.mvvm.event.ScanEvent
 import com.shark.mvvm.event.ScanEventInfo
@@ -221,7 +222,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
             listScanEventInfo?.forEach {
                 if (it.scanEvent.id == 0 || focusView.id == it.scanEvent.id) {
                     //判断此次扫描事件是否要时清除编辑框
-                    if (it.scanEvent.clean) {
+                    if (it.scanEvent.clean != CleanModel.NEVER) {
                         cleanEdit = it.scanEvent.clean
                         cleanId = it.scanEvent.id
                     }
@@ -234,7 +235,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
 
     //请求清除编辑框标识
     @Volatile
-    private var cleanEdit: Boolean = false;
+    protected var cleanEdit: CleanModel = CleanModel.NEVER
 
     @Volatile
     private var cleanId: Int? = null
@@ -243,9 +244,9 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
      * 清除编辑框
      */
     fun cleanEdit() {
-        if (!cleanEdit) return
+        if (cleanEdit == CleanModel.NEVER) return
 
-        cleanEdit = false
+        cleanEdit = CleanModel.NEVER
         val cleanEditText = findViewById<EditText>(cleanId!!)
         cleanEditText?.setText("")
     }

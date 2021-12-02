@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
+import com.shark.mvvm.event.CleanModel
 import com.shark.mvvm.viewmodel.BaseActionEvent
 import com.shark.mvvm.viewmodel.BaseViewModel
 import com.shark.mvvm.viewmodel.SharkViewModel
@@ -63,7 +64,14 @@ abstract class MvvmActivity : BaseActivity() {
                         BaseActionEvent.SHOW_LOADING_DIALOG -> {
                             startLoading(baseActionEvent.message)
                         }
+                        BaseActionEvent.LOGIC_ERROR -> {
+                            cleanEdit()
+                            dismissLoading()
+                        }
                         BaseActionEvent.DISMISS_LOADING_DIALOG -> {
+                            if (cleanEdit == CleanModel.ALWAYS) {
+                                cleanEdit()
+                            }
                             dismissLoading()
                         }
                         BaseActionEvent.SHOW_TOAST -> showToast(baseActionEvent.message)
@@ -95,7 +103,6 @@ abstract class MvvmActivity : BaseActivity() {
     }
 
     protected open fun dismissLoading() {
-        cleanEdit()
         loadingDialog.dismiss()
     }
 

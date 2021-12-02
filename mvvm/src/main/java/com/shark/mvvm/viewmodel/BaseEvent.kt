@@ -19,12 +19,13 @@ open class BaseEvent(val action: Int)
  * @constructor
  */
 class BaseActionEvent(action: Int) : BaseEvent(action) {
-    companion object{
+    companion object {
         val SHOW_LOADING_DIALOG = 1
         val DISMISS_LOADING_DIALOG = 2
         val SHOW_TOAST = 3
         val FINISH = 4
         val FINISH_WITH_RESULT_OK = 5
+        val LOGIC_ERROR = 6
     }
 
     var message: String? = null

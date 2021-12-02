@@ -54,7 +54,7 @@ class BaseRemoteSubscriber<T>(
                 baseViewModel.showToast("服务器返回数据格式异常")
 
             } else if (e is ServerResultException) {
-                baseViewModel.showToast((e as ServerResultException).errorMessage)
+                baseViewModel.logicErrorShowToast((e as ServerResultException).errorMessage)
             } else
                 baseViewModel.showToast("服务器返回异常:" + e.message)
         }

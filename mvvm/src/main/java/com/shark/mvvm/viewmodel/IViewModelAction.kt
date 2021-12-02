@@ -14,7 +14,7 @@ interface IViewModelAction {
     fun dismissLoading()
 
     fun showToast(message: String?)
-
+    fun logicErrorShowToast(message: String?)
     fun finish()
 
     fun finishWithResultOk()

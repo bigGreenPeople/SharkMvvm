@@ -36,6 +36,12 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         actionLiveData!!.value = baseActionEvent
     }
 
+    override fun logicErrorShowToast(message: String?) {
+        val baseActionEvent = BaseActionEvent(BaseActionEvent.LOGIC_ERROR)
+        baseActionEvent.message = message
+        actionLiveData!!.value = baseActionEvent
+    }
+
     override fun finish() {
         actionLiveData?.value = BaseActionEvent(BaseActionEvent.FINISH)
     }
