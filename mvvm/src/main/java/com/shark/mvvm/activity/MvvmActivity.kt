@@ -66,7 +66,7 @@ abstract class MvvmActivity : BaseActivity() {
                         }
                         BaseActionEvent.LOGIC_ERROR -> {
                             cleanEdit()
-                            dismissLoading()
+                            showToast(baseActionEvent.message)
                         }
                         BaseActionEvent.DISMISS_LOADING_DIALOG -> {
                             if (cleanEdit == CleanModel.ALWAYS) {
