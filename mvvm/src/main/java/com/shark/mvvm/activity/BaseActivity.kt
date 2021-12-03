@@ -235,7 +235,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
 
     //请求清除编辑框标识
     @Volatile
-    protected var cleanEdit: CleanModel = CleanModel.NEVER
+    public var cleanEdit: CleanModel = CleanModel.NEVER
 
     @Volatile
     private var cleanId: Int? = null

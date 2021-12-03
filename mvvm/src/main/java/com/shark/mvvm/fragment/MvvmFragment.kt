@@ -10,6 +10,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.shark.mvvm.activity.BaseActivity
+import com.shark.mvvm.event.CleanModel
 import com.shark.mvvm.fragment.BaseFragment
 import com.shark.mvvm.viewmodel.BaseActionEvent
 import com.shark.mvvm.viewmodel.BaseViewModel
@@ -75,17 +76,28 @@ open class MvvmFragment : BaseFragment() {
                 //让我们的BaseActivity 对 BaseViewModel的actionLiveData进行监听
                 // 数据发生改变的时候进行视图的变化
                 it.lifecycleOwner = this
-                it.actionLiveData!!.observe(viewLifecycleOwner, { baseActionEvent: BaseActionEvent ->
-                    when (baseActionEvent.action) {
-                        BaseActionEvent.SHOW_LOADING_DIALOG -> {
-                            startLoading(baseActionEvent.message)
+                it.actionLiveData!!.observe(
+                    viewLifecycleOwner,
+                    { baseActionEvent: BaseActionEvent ->
+                        when (baseActionEvent.action) {
+                            BaseActionEvent.SHOW_LOADING_DIALOG -> {
+                                startLoading(baseActionEvent.message)
+                            }
+                            BaseActionEvent.LOGIC_ERROR -> {
+                                val baseActivity = activity as BaseActivity
+                                baseActivity.cleanEdit()
+                                showToast(baseActionEvent.message)
+                            }
+                            BaseActionEvent.DISMISS_LOADING_DIALOG -> {
+                                val baseActivity = activity as BaseActivity
+                                if (baseActivity.cleanEdit == CleanModel.ALWAYS) {
+                                    baseActivity.cleanEdit()
+                                }
+                                dismissLoading()
+                            }
+                            BaseActionEvent.SHOW_TOAST -> showToast(baseActionEvent.message)
                         }
-                        BaseActionEvent.DISMISS_LOADING_DIALOG -> {
-                            dismissLoading()
-                        }
-                        BaseActionEvent.SHOW_TOAST -> showToast(baseActionEvent.message)
-                    }
-                })
+                    })
             }
         }
     }
@@ -107,8 +119,6 @@ open class MvvmFragment : BaseFragment() {
     }
 
     protected open fun dismissLoading() {
-        val baseActivity = activity as BaseActivity
-        baseActivity.cleanEdit()
         loadingDialog?.dismiss()
     }
 
