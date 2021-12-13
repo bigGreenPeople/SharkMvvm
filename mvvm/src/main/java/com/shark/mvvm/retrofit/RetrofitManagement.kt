@@ -21,6 +21,7 @@ import java.lang.Exception
 import com.shark.mvvm.config.HttpCode
 import com.shark.mvvm.config.HttpConfig
 import com.shark.mvvm.retrofit.model.BaseRequestModel
+import okhttp3.Interceptor
 
 
 object RetrofitManagement {
@@ -36,18 +37,29 @@ object RetrofitManagement {
     //定义线程安全的HashMap
     private val serviceMap: ConcurrentHashMap<String, Any> = ConcurrentHashMap()
 
+    private val builder = OkHttpClient.Builder()
+        .readTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS)
+        .writeTimeout(WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
+        .connectTimeout(CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
+        .addInterceptor(LoggingInterceptor())
+        .retryOnConnectionFailure(true)
+
+    fun addInterceptor(interceptor: Interceptor): OkHttpClient.Builder {
+        return builder.addInterceptor(interceptor)
+    }
+
     /**
      * 此方法构建出Retrofit对象 并对其做了基本的配置
      * @param url String
      * @return Retrofit?
      */
     private fun createRetrofit(url: String): Retrofit? {
-        val builder = OkHttpClient.Builder()
-            .readTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS)
-            .writeTimeout(WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
-            .connectTimeout(CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
-            .addInterceptor(LoggingInterceptor())
-            .retryOnConnectionFailure(true)
+//        val builder = OkHttpClient.Builder()
+//            .readTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS)
+//            .writeTimeout(WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
+//            .connectTimeout(CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
+//            .addInterceptor(LoggingInterceptor())
+//            .retryOnConnectionFailure(true)
 //        if (BuildConfig.DEBUG) {
 //            builder.addInterceptor(LoggingInterceptor())
 //        }
