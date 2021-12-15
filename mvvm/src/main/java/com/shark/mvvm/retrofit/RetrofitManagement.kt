@@ -20,6 +20,7 @@ import io.reactivex.functions.Function
 import java.lang.Exception
 import com.shark.mvvm.config.HttpCode
 import com.shark.mvvm.config.HttpConfig
+import com.shark.mvvm.retrofit.interceptor.HeaderInterceptor
 import com.shark.mvvm.retrofit.model.BaseRequestModel
 import okhttp3.Interceptor
 
@@ -41,6 +42,7 @@ object RetrofitManagement {
         .readTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS)
         .writeTimeout(WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
         .connectTimeout(CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
+        .addInterceptor(HeaderInterceptor)
         .addInterceptor(LoggingInterceptor())
         .retryOnConnectionFailure(true)
 

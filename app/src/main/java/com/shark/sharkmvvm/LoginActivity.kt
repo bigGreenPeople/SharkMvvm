@@ -1,19 +1,13 @@
 package com.shark.sharkmvvm
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.View
-import com.shark.mvvm.activity.KeyBoardMove
 import com.shark.mvvm.activity.MvvmActivity
 import com.shark.mvvm.activity.SharkActivity
-import com.shark.mvvm.event.ScanEvent
 import com.shark.mvvm.retrofit.RetrofitManagement
-import com.shark.mvvm.spread.isEmpty
-import com.shark.mvvm.spread.showToast
-import com.shark.mvvm.utils.setTimeout
 import com.shark.mvvm.viewmodel.SharkViewModel
 import com.shark.sharkmvvm.databinding.ActivityLoginBinding
-import com.shark.sharkmvvm.interceptor.HeaderInterceptor
+import com.shark.mvvm.retrofit.interceptor.HeaderInterceptor
 import com.shark.sharkmvvm.viewmodel.LoginViewModel
 
 
@@ -41,7 +35,7 @@ class LoginActivity : MvvmActivity() {
     }
 
     fun add(view: View) {
-        RetrofitManagement.addInterceptor(HeaderInterceptor())
+        HeaderInterceptor.addHeader("test_token", "213154")
     }
 
     /**
