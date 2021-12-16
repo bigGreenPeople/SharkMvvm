@@ -7,8 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import com.shark.mvvm.datasource.DataSource
+import com.shark.mvvm.exception.BaseException
+import com.shark.mvvm.retrofit.model.BaseRequestModel
 import com.shark.mvvm.service.Service
 import com.shark.mvvm.spread.TAG
+import io.reactivex.Observable
 
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application),
@@ -18,6 +21,24 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     override var actionLiveData: MutableLiveData<BaseActionEvent>? = null
 
     val dataSource: DataSource = DataSource(this)
+
+    /**
+     * 发送请求
+     * @param observable Observable<M>
+     * @param isDismiss Boolean
+     * @param isLoad Boolean
+     * @param failCallback Function1<[@kotlin.ParameterName] BaseException?, Unit>?
+     * @param successCallback Function1<[@kotlin.ParameterName] T, Unit>?
+     */
+    open fun <T, M : BaseRequestModel<T>> call(
+        observable: Observable<M>,
+        isDismiss: Boolean = true,
+        isLoad: Boolean = true,
+        failCallback: ((e: BaseException?) -> Unit)? = null,
+        successCallback: ((result: T) -> Unit)? = null
+    ) {
+        dataSource.execute(observable, isDismiss, isLoad, failCallback, successCallback)
+    }
 
     init {
         actionLiveData = MutableLiveData()

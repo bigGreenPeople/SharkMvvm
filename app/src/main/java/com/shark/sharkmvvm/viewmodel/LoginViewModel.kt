@@ -34,7 +34,7 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun test() {
-        dataSource.execute(userService.login("001", "12d3456")) {
+        call(userService.login("001", "12d3456")) {
             Log.i(TAG, "token: $it")
         }
     }
