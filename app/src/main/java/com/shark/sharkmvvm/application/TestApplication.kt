@@ -8,8 +8,8 @@ import com.xuexiang.xui.XUI
 class TestApplication : SharkApplication() {
     override fun onCreate() {
         super.onCreate()
-        HttpConfig.BASE_URL_WEATHER = "http://retailtest.qingyizhu.net/api/"
         HttpCode.CODE_SUCCESS = "200"
+        HttpConfig.BASE_URL_WEATHER = "http://192.168.31.32:8080/android/"
 
         //设置默认字体为华文行楷
 //        XUI.initFontStyle("fonts/hwxk.ttf")

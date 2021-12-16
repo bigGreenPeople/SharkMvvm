@@ -6,6 +6,6 @@ import com.shark.sharkmvvm.model.Goods
 import com.shark.sharkmvvm.service.ProductService
 
 
-class ProxyDataSource<T>(baseViewModel: BaseViewModel) :
+class DataSource<T>(baseViewModel: BaseViewModel) :
     BaseRemoteDataSource(baseViewModel) {
 }

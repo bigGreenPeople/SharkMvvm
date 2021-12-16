@@ -68,7 +68,7 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
      * @param observable Observable<BaseRequestModel<T>>
      * @param callback Function1<[@kotlin.ParameterName] T, Unit>?
      */
-    protected open fun <T, M : BaseRequestModel<T>> execute(
+    open fun <T, M : BaseRequestModel<T>> execute(
         observable: Observable<M>,
         isDismiss: Boolean = true,
         isLoad: Boolean = true,
