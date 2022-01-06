@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.View
 import com.shark.mvvm.activity.MvvmActivity
 import com.shark.mvvm.activity.SharkActivity
+import com.shark.mvvm.event.ScanEvent
 import com.shark.mvvm.retrofit.RetrofitManagement
 import com.shark.mvvm.viewmodel.SharkViewModel
 import com.shark.sharkmvvm.databinding.ActivityLoginBinding
@@ -65,6 +66,11 @@ class LoginActivity : MvvmActivity() {
      * @param view View
      */
     fun jumpSetting(view: View) {
+    }
+
+    @ScanEvent(R.id.input_password)
+    fun testSelect(msg: String) {
+        alertDialog("错误")
     }
 
 }

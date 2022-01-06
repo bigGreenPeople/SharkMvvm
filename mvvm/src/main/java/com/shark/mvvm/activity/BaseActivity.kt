@@ -21,8 +21,10 @@ import com.shark.mvvm.utils.Hide
 import com.shark.mvvm.event.ScanEvent
 import com.shark.mvvm.event.ScanEventInfo
 import com.shark.mvvm.eventbus.EventBusEnabledHandler
+import com.shark.mvvm.utils.XToastUtils
 import com.shark.mvvm.view.TitleListener
 import com.shark.mvvm.viewmodel.SharkViewModel
+import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction
 import org.greenrobot.eventbus.EventBus
 import java.lang.RuntimeException
 
@@ -252,6 +254,16 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
     }
 
     /**
+     * 全选操作的编辑框
+     */
+    fun selectEdit() {
+        cleanEdit = CleanModel.NEVER
+
+        val editText = findViewById<EditText>(cleanId!!)
+        editText.selectAll()
+    }
+
+    /**
      * 点击其他控件时关闭键盘
      * @param ev MotionEvent
      * @return Boolean
@@ -272,15 +284,50 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
      * @param titleText String
      * @param content String
      * @param confirm String
+     * @param isSelected Boolean 弹框确认后是否全选
      */
-    fun alertDialog(titleText: String = "提示", content: String = "", confirm: String = "好的") {
+    fun alertDialog(
+        titleText: String = "提示",
+        content: String = "",
+        confirm: String = "好的",
+        isSelected: Boolean = true
+    ) {
         MaterialDialog.Builder(this)
             .iconRes(R.drawable.icon_tip)
             .title(titleText)
             .content(content)
             .positiveText(confirm)
+            .onPositive { _, _ ->
+                val focusView =
+                    window.decorView.findFocus() as? EditText
+                if (isSelected) focusView?.selectAll()
+            }
             .show()
     }
+
+
+    fun info(
+        message: String,
+        isSelected: Boolean = false
+    ) {
+        XToastUtils.info(message)
+        if (isSelected) {
+            val focusView =
+                window.decorView.findFocus() as? EditText
+            focusView?.selectAll()
+        }
+    }
+
+    fun error(
+        message: String,
+        isSelected: Boolean = true
+    ) {
+        XToastUtils.error(message)
+        val focusView =
+            window.decorView.findFocus() as? EditText
+        if (isSelected) focusView?.selectAll()
+    }
+
 
     /**
      * 弹出警告
@@ -296,6 +343,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
         content: String = "",
         confirm: String = "确定",
         cancel: String = "取消",
+        isSelected: Boolean = true,
         cancelClick: (() -> Unit)? = null,
         okClick: (() -> Unit)? = null
     ) {
@@ -309,6 +357,9 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
                 cancelClick?.invoke()
             }.onPositive { dialog, which ->
                 okClick?.invoke()
+                val focusView =
+                    window.decorView.findFocus() as? EditText
+                if (isSelected) focusView?.selectAll()
             }
             .show()
     }
