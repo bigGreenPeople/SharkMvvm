@@ -37,4 +37,4 @@ jobs:
         run: gradle :mvvm:publishMvvmPublicationToMvvmRepository
         env:
           GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_USER:${{ github.event.head_commit.committer.username }}
+          GITHUB_USER: ${{ github.event.head_commit.committer.username }}
