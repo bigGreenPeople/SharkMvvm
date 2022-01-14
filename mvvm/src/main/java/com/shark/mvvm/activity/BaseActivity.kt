@@ -227,6 +227,9 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
                     if (it.scanEvent.clean != CleanModel.NEVER) {
                         cleanEdit = it.scanEvent.clean
                         cleanId = it.scanEvent.id
+                    } else {
+                        cleanEdit = it.scanEvent.clean
+                        cleanId = null
                     }
                     it.scanFun.invoke(it.objectThis, focusViewText)
                 }
@@ -249,6 +252,9 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
         if (cleanEdit == CleanModel.NEVER) return
 
         cleanEdit = CleanModel.NEVER
+
+        //判断现在获取焦点的编辑框是否还是当前编辑框
+
         val cleanEditText = findViewById<EditText>(cleanId!!)
         cleanEditText?.setText("")
     }
