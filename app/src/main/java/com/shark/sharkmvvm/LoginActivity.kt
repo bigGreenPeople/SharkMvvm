@@ -51,7 +51,7 @@ class LoginActivity : MvvmActivity() {
 
         loginViewModel.test()
 //
-//        alertWarning("警告", "是否确定",
+//       das alertWarning("警告", "是否确定",
 //            cancelClick = {
 //                "取消点击".showToast()
 //            },
