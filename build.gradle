@@ -34,3 +34,77 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+//自定义Tag
+def customTag = null
+//发布
+task gitVersionPublish() {
+    group 'gitPublish'
+    description '发布正式版本'
+    doLast {
+        //1.切换到主分支
+        switchBranch()
+        //2.合并分支(快速合并) 提交
+        println "git merge dev".execute().text
+        //3.获得提交信息
+        def commitMessage = "git log origin/master..master --pretty=format:%s".execute().text.replace("Merge branch 'dev'\n", "").replace("\n", "|")
+        println "commitMessage:$commitMessage"
+//        println "git add .".execute().text
+//        println "git commit -m '自动发布'".execute().text
+        println "git commit --amend -m $commitMessage".execute().text
+        println "git push".execute().text
+        //4.获得最后TAG
+        def lastTag = getLastTag().trim()
+        println "lastTag: $lastTag"
+        //5.自动生成最新版本
+        lastTag = autoGenVersion(lastTag)
+
+        //得到当前版本
+        def currentTag = customTag ?: lastTag
+        println("currentTag:$currentTag")
+
+        //6.设置tag
+        println "git tag $currentTag".execute().text
+        //7.提交标签
+        println "git push origin --tags".execute().text
+
+        //8.切换回dev分支
+        switchBranch("dev")
+    }
+}
+
+task testFun() {
+    group 'test'
+    description '测试'
+    doLast {
+        println getLastTag()
+    }
+}
+
+//获得最后的tag
+def getLastTag() {
+    String tagListStr = "git tag --sort=v:refname".execute().text
+    List<String> tagList = tagListStr.split("\n")
+    return tagList.get(tagList.size() - 1)
+}
+
+//切换分支
+static def switchBranch(branch = "master") {
+    def info = "git checkout $branch".execute().text
+    println("Run:$info")
+
+    //2.查看当前分支
+    info = "git branch".execute().text
+    for (line in info.split("\n")) {
+        if (line.startsWith('*') && !line.endsWith(branch))
+            throw new GradleException('switch branch fail!!')
+    }
+}
+
+//自动升级到下一个版本
+static def autoGenVersion(lastVersion = "1.0.1") {
+    def minVersionStr = lastVersion.substring(lastVersion.lastIndexOf(".") + 1, lastVersion.length())
+    int minVersion = minVersionStr.toInteger() + 1
+    return lastVersion.substring(0, lastVersion.lastIndexOf(".") + 1) + minVersion
+}
