@@ -208,6 +208,8 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
         if (event!!.action == KeyEvent.ACTION_UP && event.keyCode == KeyEvent.KEYCODE_ENTER
             || event.action == KeyEvent.ACTION_UP && event.keyCode == KeyEvent.KEYCODE_UNKNOWN
+            || event.action == KeyEvent.ACTION_UP && event.keyCode == 288
+            || event.action == KeyEvent.ACTION_UP && event.keyCode == 289
             || event.action == KeyEvent.ACTION_UP && event.keyCode == 285
             || event.action == KeyEvent.ACTION_UP && event.keyCode == 286
             || event.action == KeyEvent.ACTION_UP && event.keyCode == 305
