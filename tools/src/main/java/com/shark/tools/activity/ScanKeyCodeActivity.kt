@@ -1,58 +1,43 @@
-package com.shark.sharkmvvm
+package com.shark.tools.activity
 
-import android.annotation.SuppressLint
 import android.view.KeyEvent
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import com.shark.mvvm.activity.MvvmActivity
-import com.shark.mvvm.activity.SharkActivity
-import com.shark.mvvm.event.ScanEvent
-import com.shark.mvvm.viewmodel.SharkViewModel
-import com.shark.sharkmvvm.databinding.ActivityLoginBinding
-import com.shark.mvvm.retrofit.interceptor.HeaderInterceptor
+import com.shark.mvvm.service.Service
 import com.shark.mvvm.utils.schedule
-import com.shark.sharkmvvm.viewmodel.LoginViewModel
-import com.shark.tools.activity.ScanKeyCodeActivity
+import com.shark.tools.R
+import com.shark.tools.databinding.ActivityScanKeyCodeBinding
+import com.shark.tools.viewmodel.ScanKeyCodeViewModel
 import java.util.concurrent.ConcurrentHashMap
 
+class ScanKeyCodeActivity : MvvmActivity() {
+    lateinit var mDataBinding: ActivityScanKeyCodeBinding
 
-@SuppressLint("NonConstantResourceId")
-@SharkActivity(layoutId = R.layout.activity_login)
-class LoginActivity : MvvmActivity() {
-    lateinit var mDataBinding: ActivityLoginBinding
+    @Service
+    lateinit var viewModel: ScanKeyCodeViewModel
 
     //这个用来存储按下并弹起的按键 key为ACTION_DOWN val为ACTION_UP
     private val keyDownUpMap: ConcurrentHashMap<Int, Int> = ConcurrentHashMap()
 
-    @SharkViewModel
-    lateinit var loginViewModel: LoginViewModel
+    init {
+        initSharkActivity(R.layout.activity_scan_key_code)
+    }
+
 
     override fun initView() {
-        mDataBinding.loginViewModel = loginViewModel
-
-        //监听失去编辑框事件
         schedule(period = 300) {
             checkScanKey()
         }
+        mDataBinding.viewModel = viewModel
     }
 
-    /**
-     * 获得账套信息更新在界面
-     * @param username String
-     */
-    fun getSOB(username: String) {
+    fun confirm(view: View) {
 
     }
 
-    fun add(view: View) {
-        HeaderInterceptor.addHeader("test_token", "213154")
-    }
-
-    /**
-     * 登录按钮
-     * @param view View
-     */
-    fun login(view: View) {
-        jumpActivity(ScanKeyCodeActivity::class.java)
+    fun reset(view: View) {
+        keyDownUpMap.clear()
     }
 
     private fun checkScanKey() {
@@ -75,18 +60,6 @@ class LoginActivity : MvvmActivity() {
         }
     }
 
-    /**
-     * 跳转界面
-     * @param view View
-     */
-    fun jumpSetting(view: View) {
-    }
-
-    @ScanEvent(R.id.input_password)
-    fun testSelect(msg: String) {
-
-    }
-
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
         if (event == null) return super.dispatchKeyEvent(event)
 
@@ -97,5 +70,4 @@ class LoginActivity : MvvmActivity() {
         }
         return super.dispatchKeyEvent(event)
     }
-
 }

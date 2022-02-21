@@ -40,6 +40,9 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
     override var sharkActivity: SharkActivity? = null
     var viewDataBinding: ViewDataBinding? = null
 
+    //指定布局文件属性
+    private var layoutId: Int? = null
+
     //所有扫描注解的方法都存在这个list中
     private val listScanEventInfo: MutableList<ScanEventInfo> = mutableListOf()
 
@@ -49,6 +52,14 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
             ?.let { sharkActivity = it as SharkActivity }
         //解析Activity扫描方法
         setScanEventListener(this)
+    }
+
+    /**
+     * 因为在 Module lib 中无法在编译前确定R文件的内容 所以我们可能不能使用@SharkActivity注解
+     * 这个时候可以手动初始化sharkActivity属性
+     */
+    fun initSharkActivity(layoutId: Int) {
+        this.layoutId = layoutId
     }
 
 
@@ -86,10 +97,14 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
         injectionViewModel()
 
         sharkActivity?.let {
-            val initDataBinding = initDataBinding()
-            viewDataBinding = initDataBinding
-            initDataBinding.lifecycleOwner = this
+            viewDataBinding = initDataBinding(it.layoutId)
         }
+
+        if (sharkActivity == null) {
+            viewDataBinding = initDataBinding(layoutId!!)
+        }
+
+        viewDataBinding?.lifecycleOwner = this
 
         initView()
         eventBusEnabled()
@@ -119,7 +134,6 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
      * 设置键盘出现移动布局
      */
     private fun keyBoardMove() {
-        //获取SharkActivity注解类
         val keyBoardMove = this::class.annotations.find { it is KeyBoardMove }
             ?.let { it as KeyBoardMove }
         //如果标注了KeyBoardMove注解设置移动事件
@@ -162,12 +176,12 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
     /**
      * 初始DataBinding
      */
-    fun initDataBinding(): ViewDataBinding {
+    private fun initDataBinding(layoutId: Int): ViewDataBinding {
         //寻找定义的DataBinding属性如果不存在 抛出异常
         this::class.java.declaredFields.forEach {
             it.isAccessible = true
             if (ViewDataBinding::class.java.isAssignableFrom(it.type)) {
-                it.set(this, DataBindingUtil.setContentView(this, sharkActivity!!.layoutId))
+                it.set(this, DataBindingUtil.setContentView(this, layoutId))
                 //设置页面
                 val viewDataBinding: ViewDataBinding = it.get(this) as ViewDataBinding
                 return viewDataBinding

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.shark.tools.viewmodel.ScanKeyCodeViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.ScanKeyCodeActivity">
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="30dp" />
+
+
+        <LinearLayout
+            android:id="@+id/linear_b"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <com.xuexiang.xui.widget.button.ButtonView
+                android:id="@+id/bt_reset"
+                style="@style/ButtonView.Green"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:onClick="reset"
+                android:text="重新检测"
+                android:visibility="@{viewModel.status==2||viewModel.status==1?View.VISIBLE:View.GONE}" />
+
+
+            <com.xuexiang.xui.widget.button.ButtonView
+                android:id="@+id/bt_confirm"
+                style="@style/ButtonView.Blue"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:onClick="confirm"
+                android:text="确认"
+                android:visibility="@{viewModel.status==2?View.VISIBLE:View.GONE}" />
+
+
+            <com.xuexiang.xui.widget.button.ButtonView
+                android:id="@+id/bt_add"
+                style="@style/ButtonView.Gray"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:onClick="add"
+                android:text="继续添加"
+                android:visibility="@{viewModel.status==3?View.VISIBLE:View.GONE}" />
+
+            <com.xuexiang.xui.widget.button.ButtonView
+                android:id="@+id/bt_next"
+                style="@style/ButtonView.Blue"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:onClick="next"
+                android:text="下一步"
+                android:visibility="@{viewModel.status==3?View.VISIBLE:View.GONE}" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

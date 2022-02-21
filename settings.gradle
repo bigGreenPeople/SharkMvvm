@@ -1,3 +1,4 @@
 rootProject.name = "SharkMvvm"
 include ':app'
 include ':mvvm'
+include ':tools'
