@@ -23,12 +23,14 @@
         android:orientation="vertical">
 
         <com.xuexiang.xui.widget.actionbar.TitleBar
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tb_barHeight="40dp"
             app:tb_leftImageResource="@drawable/back1"
             app:tb_titleText="这是一个Title"
             app:tb_titleTextSize="18dp" />
+
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
@@ -41,6 +43,7 @@
             android:layout_height="wrap_content"
             android:onClick="add"
             android:text="添加Header" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_password"
             android:layout_width="match_parent"
@@ -59,7 +62,7 @@
                 android:hint="输入密码"
                 android:layoutDirection="locale"
                 android:textAlignment="viewStart"
-                app:pet_enableIconAlpha="true"/>
+                app:pet_enableIconAlpha="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.xuexiang.xui.widget.edittext.PasswordEditText
@@ -76,5 +79,11 @@
             app:pet_enableIconAlpha="true"
             app:pet_hoverShowsPw="true" />
 
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text=""
+            android:textSize="20dp" />
     </LinearLayout>
 </layout>

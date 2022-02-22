@@ -1,30 +1,32 @@
 package com.shark.sharkmvvm
 
 import android.annotation.SuppressLint
+import android.view.KeyEvent
 import android.view.View
 import com.shark.mvvm.activity.MvvmActivity
 import com.shark.mvvm.activity.SharkActivity
 import com.shark.mvvm.event.ScanEvent
-import com.shark.mvvm.retrofit.RetrofitManagement
 import com.shark.mvvm.viewmodel.SharkViewModel
 import com.shark.sharkmvvm.databinding.ActivityLoginBinding
 import com.shark.mvvm.retrofit.interceptor.HeaderInterceptor
+import com.shark.mvvm.utils.schedule
 import com.shark.sharkmvvm.viewmodel.LoginViewModel
+import com.shark.tools.activity.ScanKeyCodeActivity
+import java.util.concurrent.ConcurrentHashMap
 
 
 @SuppressLint("NonConstantResourceId")
 @SharkActivity(layoutId = R.layout.activity_login)
 class LoginActivity : MvvmActivity() {
-    var mDataBinding: ActivityLoginBinding? = null
+    lateinit var mDataBinding: ActivityLoginBinding
 
 
     @SharkViewModel
     lateinit var loginViewModel: LoginViewModel
 
     override fun initView() {
-        mDataBinding?.loginViewModel = loginViewModel
+        mDataBinding.loginViewModel = loginViewModel
 
-        //监听失去编辑框事件
     }
 
     /**
@@ -44,21 +46,7 @@ class LoginActivity : MvvmActivity() {
      * @param view View
      */
     fun login(view: View) {
-//        setTimeout {
-//            loginViewModel?.test()
-//        }
-//        loginViewModel?.test()
-
-        loginViewModel.test()
-//
-//       das alertWarning("警告", "是否确定",
-//            cancelClick = {
-//                "取消点击".showToast()
-//            },
-//            okClick = {
-//                "确定点击".showToast()
-//
-//            })
+        jumpActivity(ScanKeyCodeActivity::class.java)
     }
 
     /**
@@ -70,7 +58,8 @@ class LoginActivity : MvvmActivity() {
 
     @ScanEvent(R.id.input_password)
     fun testSelect(msg: String) {
-        alertDialog("错误")
+        info("扫描成功:$msg")
     }
+
 
 }
