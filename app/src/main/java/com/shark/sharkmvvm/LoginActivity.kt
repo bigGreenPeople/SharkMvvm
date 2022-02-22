@@ -20,8 +20,6 @@ import java.util.concurrent.ConcurrentHashMap
 class LoginActivity : MvvmActivity() {
     lateinit var mDataBinding: ActivityLoginBinding
 
-    //这个用来存储按下并弹起的按键 key为ACTION_DOWN val为ACTION_UP
-    private val keyDownUpMap: ConcurrentHashMap<Int, Int> = ConcurrentHashMap()
 
     @SharkViewModel
     lateinit var loginViewModel: LoginViewModel
@@ -29,10 +27,6 @@ class LoginActivity : MvvmActivity() {
     override fun initView() {
         mDataBinding.loginViewModel = loginViewModel
 
-        //监听失去编辑框事件
-        schedule(period = 300) {
-            checkScanKey()
-        }
     }
 
     /**
@@ -55,26 +49,6 @@ class LoginActivity : MvvmActivity() {
         jumpActivity(ScanKeyCodeActivity::class.java)
     }
 
-    private fun checkScanKey() {
-        val filter = keyDownUpMap.filter { keyDownUp -> keyDownUp.value != -1 }
-        if (filter.isEmpty()) {
-            runOnUiThread {
-                mDataBinding.tvMessage.text = "请按下扫描按键"
-            }
-            return
-        }
-        if (filter.size > 1) {
-            runOnUiThread {
-                mDataBinding.tvMessage.text = "检测到扫描按键有多个,无法确定扫描按键"
-            }
-            return
-        }
-
-        runOnUiThread {
-            mDataBinding.tvMessage.text = "检测成功! 扫描按键为:${filter.values.toMutableList()[0]}"
-        }
-    }
-
     /**
      * 跳转界面
      * @param view View
@@ -84,18 +58,8 @@ class LoginActivity : MvvmActivity() {
 
     @ScanEvent(R.id.input_password)
     fun testSelect(msg: String) {
-
+        info("扫描成功:$msg")
     }
 
-    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        if (event == null) return super.dispatchKeyEvent(event)
-
-        if (event.action == KeyEvent.ACTION_DOWN) {
-            keyDownUpMap[event.keyCode] = -1
-        } else if (event.action == KeyEvent.ACTION_UP && keyDownUpMap.containsKey(event.keyCode)) {
-            keyDownUpMap[event.keyCode] = event.keyCode
-        }
-        return super.dispatchKeyEvent(event)
-    }
 
 }

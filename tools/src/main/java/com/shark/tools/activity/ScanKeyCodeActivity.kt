@@ -4,6 +4,7 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.shark.mvvm.activity.MvvmActivity
+import com.shark.mvvm.config.ScanConfig
 import com.shark.mvvm.service.Service
 import com.shark.mvvm.utils.schedule
 import com.shark.mvvm.viewmodel.SharkViewModel
@@ -46,6 +47,10 @@ class ScanKeyCodeActivity : MvvmActivity() {
         finish()
     }
 
+    /**
+     * 确认添加扫描按键
+     * @param view View
+     */
     fun confirm(view: View) {
         val filter = keyDownUpMap.filter { keyDownUp -> keyDownUp.value != -1 }
         if (filter.size != 1) return
@@ -53,6 +58,7 @@ class ScanKeyCodeActivity : MvvmActivity() {
         timer.cancel()
 
         val keyCode = filter.values.toMutableList()[0]
+        ScanConfig.keySet.add(keyCode)
         mDataBinding.tvMessage.text = "添加${keyCode}成功"
 
         keyDownUpMap.clear()

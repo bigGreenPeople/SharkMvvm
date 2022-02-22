@@ -16,6 +16,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.shark.mvvm.R
+import com.shark.mvvm.config.ScanConfig
 import com.shark.mvvm.event.CleanModel
 import com.shark.mvvm.utils.Hide
 import com.shark.mvvm.event.ScanEvent
@@ -220,13 +221,8 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
      * @return
      */
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        if (event!!.action == KeyEvent.ACTION_UP && event.keyCode == KeyEvent.KEYCODE_ENTER
-            || event.action == KeyEvent.ACTION_UP && event.keyCode == KeyEvent.KEYCODE_UNKNOWN
-            || event.action == KeyEvent.ACTION_UP && event.keyCode == 288
-            || event.action == KeyEvent.ACTION_UP && event.keyCode == 289
-            || event.action == KeyEvent.ACTION_UP && event.keyCode == 285
-            || event.action == KeyEvent.ACTION_UP && event.keyCode == 286
-            || event.action == KeyEvent.ACTION_UP && event.keyCode == 305
+        if (event!!.action == KeyEvent.ACTION_UP
+            && ScanConfig.keySet.contains(event.keyCode)
         ) {
             val focusView =
                 window.decorView.findFocus() as? TextView ?: return super.dispatchKeyEvent(event)
