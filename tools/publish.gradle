@@ -2,7 +2,7 @@ apply plugin: 'maven-publish'
 
 def LIB_GROUP_ID = 'com.shark.android'
 def LIB_ARTIFACT_ID = 'tools'
-def LIB_VERSION = project.properties['TAG_VERSION'] ?: '1.0.0'
+def LIB_VERSION = project.properties['TAG_VERSION'] ?: '1.0.1'
 
 task sourceJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
