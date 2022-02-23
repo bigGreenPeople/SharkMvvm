@@ -2,10 +2,7 @@ package com.shark.tools.activity
 
 import android.view.KeyEvent
 import android.view.View
-import androidx.lifecycle.MutableLiveData
 import com.shark.mvvm.activity.MvvmActivity
-import com.shark.mvvm.config.ScanConfig
-import com.shark.mvvm.service.Service
 import com.shark.mvvm.utils.schedule
 import com.shark.mvvm.viewmodel.SharkViewModel
 import com.shark.tools.R
@@ -58,7 +55,7 @@ class ScanKeyCodeActivity : MvvmActivity() {
         timer.cancel()
 
         val keyCode = filter.values.toMutableList()[0]
-        ScanConfig.keySet.add(keyCode)
+        viewModel.addCodeKey(keyCode)
         mDataBinding.tvMessage.text = "添加${keyCode}成功"
 
         keyDownUpMap.clear()

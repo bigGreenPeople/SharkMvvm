@@ -221,9 +221,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
      * @return
      */
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        if (event!!.action == KeyEvent.ACTION_UP
-            && ScanConfig.keySet.contains(event.keyCode)
-        ) {
+        if (event!!.action == KeyEvent.ACTION_UP && ScanConfig.keySet.contains(event.keyCode)) {
             val focusView =
                 window.decorView.findFocus() as? TextView ?: return super.dispatchKeyEvent(event)
             //检测是否是可读文本控件
