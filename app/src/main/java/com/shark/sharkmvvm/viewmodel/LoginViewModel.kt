@@ -13,6 +13,10 @@ import com.shark.mvvm.spread.TAG
 import com.shark.mvvm.viewmodel.BaseViewModel
 import com.shark.sharkmvvm.datasource.UserDataSource
 import com.shark.sharkmvvm.service.UserService
+import com.shark.tools.room.entity.ScanCode
+import com.shark.tools.room.repository.ScanCodeRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 //用户信息 SharedPreferences名称
@@ -24,13 +28,16 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
     //共享文件
     private val sharedPreferences: SharedPreferences =
         application.getSharedPreferences(USER_PREFS_NAME, Context.MODE_PRIVATE)
+    private val scanCodeRepository: ScanCodeRepository = ScanCodeRepository(application)
+
 
     @Service
     private lateinit var userService: UserService
 
     init {
-        //显示最后登录的用户名称
-
+        GlobalScope.launch {
+            scanCodeRepository.synchronizeScanCode()
+        }
     }
 
     fun test() {

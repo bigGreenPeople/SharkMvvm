@@ -36,7 +36,6 @@ android {
         jvmTarget = '1.8'
     }
 }
-def room_version = "2.2.5"
 
 dependencies {
 
