@@ -2,13 +2,22 @@ apply plugin: 'maven-publish'
 
 def LIB_GROUP_ID = 'com.shark.android'
 def LIB_ARTIFACT_ID = 'tools'
-def LIB_VERSION = project.properties['TAG_VERSION'] ?: '1.0.1'
+def LIB_VERSION = project.properties['TOOLS_VERSION'] ?: getLastTag()
 
 task sourceJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier "sources"
 }
 
+//获得最后的tag
+def getLastTag() {
+    String tagListStr = "git tag --sort=v:refname".execute().text
+    List<String> tagList = tagListStr.split("\n")
+    return tagList.get(tagList.size() - 1)
+}
+
+
+//publishToolsPublicationToGitToolsRepository.dependsOn(gitVersionPublishTools)
 publishing {
     repositories {
         maven {
@@ -46,5 +55,28 @@ publishing {
                 }
             }
         }
+    }
+}
+
+
+//task changeVersion(dependsOn: assemble) {
+//    group 'gitPublish'
+//    description '修改版本号'
+//    doLast {
+//        if (LIB_VERSION == null) {
+//            LIB_VERSION = getLastTag()
+//            println "Publish Version is:$LIB_VERSION"
+//        }
+//    }
+//}
+//
+//publishToolsPublicationToGitToolsRepository.dependsOn(changeVersion)
+
+//发布Tools
+task gitVersionPublishTools(dependsOn: publishToolsPublicationToGitToolsRepository) {
+    group 'gitPublish'
+    description '发布Tools正式版本'
+    doLast {
+        println "Publish Success!! :$LIB_VERSION"
     }
 }
