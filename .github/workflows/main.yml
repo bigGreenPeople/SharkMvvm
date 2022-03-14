@@ -32,10 +32,10 @@ jobs:
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
 
       - name: build mvvm package
-        run: gradle :mvvm:build
+        run: gradle :mvvm:clean && gradle :mvvm:build
 
       - name: build tools package
-        run: gradle :tools:build
+        run: gradle :tools:clean && gradle :tools:build
 
       #获取TAG版本
       - name: Get the version
