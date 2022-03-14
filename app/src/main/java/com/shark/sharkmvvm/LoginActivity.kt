@@ -71,7 +71,7 @@ class LoginActivity : MvvmActivity() {
 
     @ScanEvent(R.id.input_password)
     fun testSelect(msg: String) {
-        info("扫描成功:$msg")
+        alertDialog("dsasad")
     }
 
 
