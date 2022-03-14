@@ -245,6 +245,9 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
                 }
             }
         }
+
+        if (ScanConfig.closeSystemKeySet.contains(event.keyCode)) return false
+
         return super.dispatchKeyEvent(event)
     }
 

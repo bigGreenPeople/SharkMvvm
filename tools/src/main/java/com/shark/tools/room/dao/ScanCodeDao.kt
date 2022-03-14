@@ -23,6 +23,9 @@ interface ScanCodeDao {
     @Delete
     fun delete(scanCode: ScanCode)
 
+    @Query("DELETE  FROM scan_code where key_code=:scanCode")
+    fun delete(scanCode: Int)
+
     @Query("DELETE FROM scan_code ")
     fun deleteAll()
 
