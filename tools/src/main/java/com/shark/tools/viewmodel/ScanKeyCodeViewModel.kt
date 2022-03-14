@@ -25,6 +25,27 @@ class ScanKeyCodeViewModel(application: Application) : BaseViewModel(application
     }
 
     /**
+     * 删除所有扫描事件
+     */
+    fun deleteAllCodeKey() {
+        ScanConfig.keySet.clear()
+        GlobalScope.launch {
+            scanCodeRepository.deleteAllSetting()
+        }
+    }
+
+    /**
+     * 删除扫描事件
+     * @param keyCode Int
+     */
+    fun deleteCodeKey(keyCode: Int) {
+        ScanConfig.keySet.remove(keyCode)
+        GlobalScope.launch {
+            scanCodeRepository.delete(keyCode)
+        }
+    }
+
+    /**
      * 添加扫描事件
      * @param keyCode Int
      */

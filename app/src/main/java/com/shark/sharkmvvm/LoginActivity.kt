@@ -12,6 +12,7 @@ import com.shark.mvvm.retrofit.interceptor.HeaderInterceptor
 import com.shark.mvvm.utils.schedule
 import com.shark.sharkmvvm.viewmodel.LoginViewModel
 import com.shark.tools.activity.ScanKeyCodeActivity
+import com.shark.tools.viewmodel.ScanKeyCodeViewModel
 import java.util.concurrent.ConcurrentHashMap
 
 
@@ -20,9 +21,11 @@ import java.util.concurrent.ConcurrentHashMap
 class LoginActivity : MvvmActivity() {
     lateinit var mDataBinding: ActivityLoginBinding
 
-
     @SharkViewModel
     lateinit var loginViewModel: LoginViewModel
+
+    @SharkViewModel
+    lateinit var scanKeyCodeViewModel: ScanKeyCodeViewModel
 
     override fun initView() {
         mDataBinding.loginViewModel = loginViewModel
@@ -37,6 +40,11 @@ class LoginActivity : MvvmActivity() {
 
     }
 
+//    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+//        if (event!!.keyCode == KeyEvent.KEYCODE_ENTER) return false
+//        return super.dispatchKeyEvent(event)
+//    }
+
     fun add(view: View) {
         HeaderInterceptor.addHeader("test_token", "213154")
     }
@@ -46,8 +54,13 @@ class LoginActivity : MvvmActivity() {
      * @param view View
      */
     fun login(view: View) {
-        jumpActivity(ScanKeyCodeActivity::class.java)
+//        jumpActivity(ScanKeyCodeActivity::class.java)
+//        scanKeyCodeViewModel.deleteAllCodeKey()
+        scanKeyCodeViewModel.deleteCodeKey(KeyEvent.KEYCODE_ENTER)
+
+        info("删除成功")
     }
+
 
     /**
      * 跳转界面

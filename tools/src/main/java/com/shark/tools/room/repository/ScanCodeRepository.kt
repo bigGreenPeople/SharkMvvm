@@ -22,6 +22,7 @@ class ScanCodeRepository(val context: Context) {
 
 
     fun delete(scanCode: ScanCode) = scanCodeDao?.delete(scanCode)
+    fun delete(scanCode: Int) = scanCodeDao?.delete(scanCode)
 
     fun deleteAllSetting() =
         scanCodeDao?.deleteAll()
