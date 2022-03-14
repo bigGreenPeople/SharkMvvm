@@ -231,8 +231,15 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
                 return super.dispatchKeyEvent(event)
 
             // viewMode相关事件调用
-            listScanEventInfo?.forEach {
+            listScanEventInfo.forEach {
                 if (it.scanEvent.id == 0 || focusView.id == it.scanEvent.id) {
+                    //TODO 这里要做一个锁 如果锁是锁住的状态就不做处理 如果锁不是锁住的状态就做处理 (由于时间问题我们暂时使用Volatile变量来处理这个问题)
+                    //防止\n两次扫描事件触发 也防止快速扫描多次
+                    if (preEvent != null && event.eventTime - preEvent!!.eventTime < 500) {
+                        return@forEach
+                    }
+                    preEvent = event
+
                     //判断此次扫描事件是否要时清除编辑框
                     if (it.scanEvent.clean != CleanModel.NEVER) {
                         cleanEdit = it.scanEvent.clean
@@ -250,6 +257,10 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
 
         return super.dispatchKeyEvent(event)
     }
+
+    //上一个KeyEvent
+    @Volatile
+    public var preEvent: KeyEvent? = null
 
     //请求清除编辑框标识
     @Volatile
