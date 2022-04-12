@@ -22,6 +22,7 @@ import com.shark.mvvm.utils.Hide
 import com.shark.mvvm.event.ScanEvent
 import com.shark.mvvm.event.ScanEventInfo
 import com.shark.mvvm.eventbus.EventBusEnabledHandler
+import com.shark.mvvm.utils.StringUtils
 import com.shark.mvvm.utils.XToastUtils
 import com.shark.mvvm.view.TitleListener
 import com.shark.mvvm.viewmodel.SharkViewModel
@@ -182,7 +183,23 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
         this::class.java.declaredFields.forEach {
             it.isAccessible = true
             if (ViewDataBinding::class.java.isAssignableFrom(it.type)) {
-                it.set(this, DataBindingUtil.setContentView(this, layoutId))
+
+                if (layoutId == 0) {
+                    //获取R.layout.id
+                    val idName = StringUtils.underscoreName(
+                        it.type.simpleName.replace("Binding", "")
+                            .replace("Impl", "")
+                    )
+                    val genLayoutId: Int = resources.getIdentifier(idName, "layout", packageName)
+
+                    if (genLayoutId == 0) throw RuntimeException("R.layout.$idName does not exist!!")
+
+                    it.set(this, DataBindingUtil.setContentView(this, genLayoutId))
+
+                } else {
+                    it.set(this, DataBindingUtil.setContentView(this, layoutId))
+                }
+
                 //设置页面
                 val viewDataBinding: ViewDataBinding = it.get(this) as ViewDataBinding
                 return viewDataBinding
