@@ -59,7 +59,7 @@ abstract class MvvmActivity : BaseActivity() {
                 //让我们的BaseActivity 对 BaseViewModel的actionLiveData进行监听
                 // 数据发生改变的时候进行视图的变化
                 it.lifecycleOwner = this@MvvmActivity
-                it.actionLiveData!!.observe(this@MvvmActivity, { baseActionEvent: BaseActionEvent ->
+                it.actionLiveData!!.observe(this@MvvmActivity) { baseActionEvent: BaseActionEvent ->
                     when (baseActionEvent.action) {
                         BaseActionEvent.SHOW_LOADING_DIALOG -> {
                             startLoading(baseActionEvent.message)
@@ -81,7 +81,7 @@ abstract class MvvmActivity : BaseActivity() {
                             finish()
                         }
                     }
-                })
+                }
             }
         }
     }

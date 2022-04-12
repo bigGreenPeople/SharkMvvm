@@ -1,6 +1,7 @@
 package com.shark.sharkmvvm
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import com.shark.mvvm.activity.MvvmActivity
@@ -9,7 +10,9 @@ import com.shark.mvvm.event.ScanEvent
 import com.shark.mvvm.viewmodel.SharkViewModel
 import com.shark.sharkmvvm.databinding.ActivityLoginBinding
 import com.shark.mvvm.retrofit.interceptor.HeaderInterceptor
+import com.shark.mvvm.utils.StringUtils
 import com.shark.mvvm.utils.schedule
+import com.shark.sharkmvvm.databinding.FujieActivityLoginTestBinding
 import com.shark.sharkmvvm.viewmodel.LoginViewModel
 import com.shark.tools.activity.ScanKeyCodeActivity
 import com.shark.tools.viewmodel.ScanKeyCodeViewModel
@@ -17,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 
 @SuppressLint("NonConstantResourceId")
-@SharkActivity(layoutId = R.layout.activity_login)
+@SharkActivity
 class LoginActivity : MvvmActivity() {
     lateinit var mDataBinding: ActivityLoginBinding
 
@@ -29,6 +32,8 @@ class LoginActivity : MvvmActivity() {
 
     override fun initView() {
         mDataBinding.loginViewModel = loginViewModel
+        val name = mDataBinding.javaClass
+        Log.i(TAG, "ActivityLoginBinding: ${StringUtils.underscoreName("ActivityLoginBinding")}")
 
     }
 
