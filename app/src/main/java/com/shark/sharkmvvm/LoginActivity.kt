@@ -24,6 +24,8 @@ import java.util.concurrent.ConcurrentHashMap
 class LoginActivity : MvvmActivity() {
     lateinit var mDataBinding: ActivityLoginBinding
 
+    lateinit var testList: List<String>;
+
     @SharkViewModel
     lateinit var loginViewModel: LoginViewModel
 
@@ -61,9 +63,11 @@ class LoginActivity : MvvmActivity() {
     fun login(view: View) {
 //        jumpActivity(ScanKeyCodeActivity::class.java)
 //        scanKeyCodeViewModel.deleteAllCodeKey()
-        scanKeyCodeViewModel.deleteCodeKey(KeyEvent.KEYCODE_ENTER)
+//        scanKeyCodeViewModel.deleteCodeKey(KeyEvent.KEYCODE_ENTER)
 
-        info("删除成功")
+//        info("删除成功")
+        testList.size
+//        loginViewModel.test()
     }
 
 
