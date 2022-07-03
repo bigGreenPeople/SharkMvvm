@@ -12,8 +12,7 @@ SharkMvvm是对android mvvm架构的一种封装实现，其中提供了很多�
 
 ### Supported Language
 
-Kotlin\
-
+Kotlin
 
 ### Install
 
@@ -42,16 +41,14 @@ allprojects {
 }
 ```
 
-2\. 在**gradle.properties**中配置您的github username和token
+2\. 在**gradle.properties**中配置您的github **username**和**token**
 
 ```
 GITHUB_USER=sharkchilli7
 GITHUB_PERSONAL_ACCESS_TOKEN=ghp_f2***********************
 ```
 
-{% hint style="info" %}
-这里建议你将信息配置到系统环境变量中
-{% endhint %}
+> 这里建议你将信息配置到系统环境变量中
 
 3\. 最后在你的模块**build.gradle**的**dependencies**块中引入**SharkMvvm**即可
 
