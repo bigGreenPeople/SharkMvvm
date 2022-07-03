@@ -32,14 +32,14 @@ allprojects {
             url = uri("https://maven.pkg.github.com/bigGreenPeople/sharkmvvm")
             credentials {
                 username = project.properties['GITHUB_USER'] ?: System.getenv('GITHUB_USER')
-                password = project.properties['GITHUB_PERSONAL_ACCESS_TOKEN'] ?: System.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')
+                password = project.properties['GITHUB_中配置您的githubPERSONAL_ACCESS_TOKEN'] ?: System.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')
             }
         }
     }
 }
 ```
 
-2\. 在**gradle.properties**中配置您的github **username**和**token**
+2\. 在**gradle.properties** **username**和**token**
 
 ```
 GITHUB_USER=sharkchilli7

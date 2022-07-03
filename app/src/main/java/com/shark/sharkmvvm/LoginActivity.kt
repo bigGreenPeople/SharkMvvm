@@ -12,7 +12,6 @@ import com.shark.sharkmvvm.databinding.ActivityLoginBinding
 import com.shark.mvvm.retrofit.interceptor.HeaderInterceptor
 import com.shark.mvvm.utils.StringUtils
 import com.shark.mvvm.utils.schedule
-import com.shark.sharkmvvm.databinding.FujieActivityLoginTestBinding
 import com.shark.sharkmvvm.viewmodel.LoginViewModel
 import com.shark.tools.activity.ScanKeyCodeActivity
 import com.shark.tools.viewmodel.ScanKeyCodeViewModel
