@@ -12,6 +12,7 @@ import com.shark.mvvm.service.Service
 import com.shark.mvvm.spread.TAG
 import com.shark.mvvm.viewmodel.BaseViewModel
 import com.shark.sharkmvvm.datasource.UserDataSource
+import com.shark.sharkmvvm.service.TestService
 import com.shark.sharkmvvm.service.UserService
 import com.shark.tools.room.entity.ScanCode
 import com.shark.tools.room.repository.ScanCodeRepository
@@ -23,8 +24,17 @@ class DemoViewModel(application: Application) : BaseViewModel(application) {
 
     val dataString: MutableLiveData<String> = MutableLiveData()
 
+    @Service
+    lateinit var service: TestService
+
     init {
         //初始化数据
         dataString.value = "SharkChilli"
+    }
+
+    fun test(type: String) {
+        call(service.test(type)) {
+            Log.i(TAG, "test: $it")
+        }
     }
 }

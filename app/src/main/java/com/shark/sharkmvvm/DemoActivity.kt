@@ -1,6 +1,7 @@
 package com.shark.sharkmvvm
 
 import android.util.Log
+import android.view.View
 import com.shark.mvvm.activity.MvvmActivity
 import com.shark.mvvm.activity.SharkActivity
 import com.shark.mvvm.event.ScanEvent
@@ -31,5 +32,13 @@ class DemoActivity : MvvmActivity() {
         Log.i(TAG, code)
     }
 
+
+    fun successCall(view: View) {
+        viewModel.test("0")
+    }
+
+    fun errorCall(view: View) {
+        viewModel.test("1")
+    }
 
 }
