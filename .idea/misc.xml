@@ -3,10 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidPro/NewSharkMvvm/app/src/main/res/layout/activity_demo.xml" value="0.5489583333333333" />
         <entry key="..\:/AndroidPro/SharkMvvm/app/src/main/res/layout/activity_login.xml" value="0.5" />
         <entry key="..\:/AndroidPro/SharkMvvm/app/src/main/res/layout/activity_main.xml" value="0.2046875" />
         <entry key="..\:/AndroidPro/SharkMvvm/mvvm/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
+        <entry key="..\:/Androidpro/SharkMvvm/app/src/main/res/layout/activity_demo.xml" value="0.2391304347826087" />
         <entry key="..\:/Androidpro/SharkMvvm/app/src/main/res/layout/activity_login.xml" value="0.17300724637681159" />
         <entry key="..\:/Androidpro/SharkMvvm/app/src/main/res/layout/fujie_activity_login_test.xml" value="0.1" />
         <entry key="..\:/Androidpro/SharkMvvm/tool/src/main/res/layout/activity_scankey_code_check.xml" value="0.11197916666666667" />
