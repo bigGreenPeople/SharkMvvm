@@ -51,5 +51,6 @@ GITHUB_PERSONAL_ACCESS_TOKEN=ghp_f2***********************
 3\. 最后在你的模块**build.gradle**的**dependencies**块中引入**SharkMvvm**即可
 
 ```
+implementation "org.jetbrains.kotlin:kotlin-reflect"
 implementation 'com.shark.android:mvvm:1.2.+'
 ```
