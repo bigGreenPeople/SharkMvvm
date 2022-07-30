@@ -27,13 +27,13 @@ import okhttp3.Interceptor
 
 object RetrofitManagement {
     //读超时时间
-    private const val READ_TIMEOUT: Long = 6000
+    private const val READ_TIMEOUT: Long = 12000
 
     //写超时间
-    private const val WRITE_TIMEOUT: Long = 6000
+    private const val WRITE_TIMEOUT: Long = 12000
 
     //连接超时时间
-    private const val CONNECT_TIMEOUT: Long = 6000
+    private const val CONNECT_TIMEOUT: Long = 12000
 
     //定义线程安全的HashMap
     private val serviceMap: ConcurrentHashMap<String, Any> = ConcurrentHashMap()

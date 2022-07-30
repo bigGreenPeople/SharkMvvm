@@ -9,15 +9,6 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$PROJECT_DIR$/../../gradle-6.7.1/wrapper/dists/gradle-7.0.2-bin/857tjihv64xamwrf0h14cai3r/gradle-7.0.2" />
         <option name="gradleJvm" value="11" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/mvvm" />
-            <option value="$PROJECT_DIR$/tools" />
-          </set>
-        </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="testRunner" value="GRADLE" />
@@ -33,7 +24,6 @@
             <option value="$PROJECT_DIR$/tools" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
