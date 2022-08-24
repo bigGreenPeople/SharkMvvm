@@ -9,7 +9,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseAdapter<T, TBinding : ViewDataBinding>(
-    var itemList: List<T>,
+    var itemList: MutableList<T>,
     val brId: Int
 ) : RecyclerView.Adapter<BaseAdapter<T, TBinding>.ViewHolder>() {
     val TAG: String = "SharkChilli"
