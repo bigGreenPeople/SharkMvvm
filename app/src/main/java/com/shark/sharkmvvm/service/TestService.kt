@@ -11,7 +11,7 @@ import retrofit2.http.*
  */
 interface TestService {
 
-    @GET("test/index")
+    @GET("test/header")
     fun test(
         @Query("type") type: String
     ): Observable<RequestModel<User>>
