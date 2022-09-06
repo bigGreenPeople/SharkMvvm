@@ -33,7 +33,6 @@ data class AndroidCrash(
     var sdkVersion: String? = null,
 
     //系统版本名称
-
     var systemVersionName: String? = null,
 ) {
     fun getDeviceCrash(mContext: Context, logPath: String?): AndroidCrash {

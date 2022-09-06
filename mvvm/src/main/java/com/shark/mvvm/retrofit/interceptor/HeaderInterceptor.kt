@@ -8,7 +8,7 @@ import java.io.IOException
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * 打印请求日志
+ * 请求头拦截器
  */
 object HeaderInterceptor : Interceptor {
     private val headerMap: ConcurrentHashMap<String, String> = ConcurrentHashMap()
