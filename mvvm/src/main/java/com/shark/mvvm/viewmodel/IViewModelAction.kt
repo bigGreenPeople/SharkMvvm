@@ -15,6 +15,8 @@ interface IViewModelAction {
 
     fun showToast(message: String?)
     fun logicErrorShowToast(message: String?)
+    fun handleTokenInvalid(message: String?)
+
     fun finish()
 
     fun finishWithResultOk()

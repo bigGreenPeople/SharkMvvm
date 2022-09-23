@@ -6,10 +6,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
+import com.shark.mvvm.config.HttpCode
+import com.shark.mvvm.crash.SharkCrashHandler
 import com.shark.mvvm.datasource.DataSource
 import com.shark.mvvm.exception.BaseException
+import com.shark.mvvm.retrofit.RetrofitManagement
+import com.shark.mvvm.retrofit.interceptor.HeaderInterceptor
 import com.shark.mvvm.retrofit.model.BaseRequestModel
+import com.shark.mvvm.retrofit.model.RequestModel
 import com.shark.mvvm.service.Service
+import com.shark.mvvm.service.api.AppService
+import com.shark.mvvm.service.api.UserService
 import com.shark.mvvm.spread.TAG
 import io.reactivex.Observable
 
@@ -37,7 +44,9 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         failCallback: ((e: BaseException?) -> Unit)? = null,
         successCallback: ((result: T) -> Unit)? = null
     ) {
-        dataSource.execute(observable, isDismiss, isLoad, failCallback, successCallback)
+        dataSource.execute(observable, isDismiss, isLoad, failCallback) { result ->
+            successCallback?.invoke(result)
+        }
     }
 
     init {
@@ -80,6 +89,12 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         actionLiveData!!.value = baseActionEvent
     }
 
+    override fun handleTokenInvalid(message: String?) {
+        val baseActionEvent = BaseActionEvent(BaseActionEvent.Token_Invalid)
+        baseActionEvent.message = message
+        actionLiveData!!.value = baseActionEvent
+    }
+
     override fun finish() {
         actionLiveData?.value = BaseActionEvent(BaseActionEvent.FINISH)
     }
@@ -88,4 +103,10 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         actionLiveData?.value = BaseActionEvent(BaseActionEvent.FINISH_WITH_RESULT_OK)
     }
 
+    fun handlerTokenRenew() {
+        val userService = dataSource.getService(UserService::class.java)
+        call(userService.renewToken(), isDismiss = false, isLoad = false) { token ->
+            HeaderInterceptor.addHeader(HeaderInterceptor.TOKEN_NAME, token)
+        }
+    }
 }

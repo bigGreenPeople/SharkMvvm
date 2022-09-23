@@ -1,5 +1,7 @@
 package com.shark.mvvm.retrofit
 
+import android.util.Log
+import android.widget.Toast
 import com.shark.mvvm.exception.ServerResultException
 import com.shark.mvvm.exception.TokenInvalidException
 import com.shark.mvvm.retrofit.interceptor.LoggingInterceptor
@@ -20,8 +22,13 @@ import io.reactivex.functions.Function
 import java.lang.Exception
 import com.shark.mvvm.config.HttpCode
 import com.shark.mvvm.config.HttpConfig
+import com.shark.mvvm.crash.SharkCrashHandler
+import com.shark.mvvm.model.AndroidCrash
 import com.shark.mvvm.retrofit.interceptor.HeaderInterceptor
 import com.shark.mvvm.retrofit.model.BaseRequestModel
+import com.shark.mvvm.retrofit.model.RequestModel
+import com.shark.mvvm.service.api.UserService
+import com.shark.mvvm.spread.TAG
 import okhttp3.Interceptor
 
 
@@ -90,8 +97,19 @@ object RetrofitManagement {
                             //如果成功则创建数据被观察者
                             return@Function createData(result.data)
                         }
+                        HttpCode.CODE_TOKEN_REFRESH_SUCCESS -> {
+                            //调用刷新token接口
+                            reCall()
+                            return@Function createData(result.data)
+                        }
                         HttpCode.CODE_TOKEN_INVALID -> {
-                            throw TokenInvalidException()
+                            throw TokenInvalidException(errorMessage = result.msg)
+                        }
+                        HttpCode.CODE_TOKEN_REFRESH_ERROR -> {
+                            throw ServerResultException(
+                                HttpCode.CODE_TOKEN_REFRESH_ERROR,
+                                result.msg
+                            )
                         }
                         else -> {
                             throw ServerResultException(
@@ -102,6 +120,22 @@ object RetrofitManagement {
                     }
                 })
         }
+    }
+
+    //刷新接口
+    fun reCall() {
+        val userService = getService(UserService::class.java)
+        val requestModelCall = userService.renewToken()
+        val d = requestModelCall
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe({ result ->
+                if (result.type == "200" || result.type == "-8") {
+                    Log.i(TAG, "handleExample2: $result")
+                    HeaderInterceptor.addHeader(HeaderInterceptor.TOKEN_NAME, result.data)
+                }
+            }) { t -> Log.e(TAG, "reCall: ", t) }
+
     }
 
     /**

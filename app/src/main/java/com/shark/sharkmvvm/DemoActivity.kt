@@ -41,4 +41,7 @@ class DemoActivity : MvvmActivity() {
         viewModel.test("1")
     }
 
+    fun jumpPage(view: View) {
+        jumpActivity(LoginActivity::class.java)
+    }
 }

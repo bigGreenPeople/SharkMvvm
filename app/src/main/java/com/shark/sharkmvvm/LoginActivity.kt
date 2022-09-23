@@ -65,8 +65,16 @@ class LoginActivity : MvvmActivity() {
 //        scanKeyCodeViewModel.deleteCodeKey(KeyEvent.KEYCODE_ENTER)
 
 //        info("删除成功")
-        testList.size
-//        loginViewModel.test()
+//        testList.size
+        loginViewModel.test()
+    }
+
+    fun callTest(view: View){
+//        HeaderInterceptor.addHeader("Authorization", "213154")
+        loginViewModel.callTest()
+        schedule(period = 20000){
+            loginViewModel.callTest()
+        }
     }
 
 

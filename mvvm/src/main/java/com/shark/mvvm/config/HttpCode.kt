@@ -16,4 +16,8 @@ object HttpCode {
     var CODE_FORBIDDEN = "-6"
 
     var CODE_RESULT_INVALID = "-7"
+
+    var CODE_TOKEN_REFRESH_SUCCESS = "-8"
+    var CODE_TOKEN_REFRESH_ERROR = "-9"
+
 }

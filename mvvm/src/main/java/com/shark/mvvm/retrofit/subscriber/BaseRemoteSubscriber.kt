@@ -7,10 +7,13 @@ import io.reactivex.observers.DisposableObserver
 import com.shark.mvvm.config.HttpCode
 import com.shark.mvvm.exception.BaseException
 import com.shark.mvvm.exception.ServerResultException
+import com.shark.mvvm.exception.TokenInvalidException
 
 
 import com.shark.mvvm.retrofit.callback.RequestCallback
 import com.shark.mvvm.retrofit.callback.RequestMultiplyCallback
+import com.shark.mvvm.retrofit.model.RequestModel
+import com.shark.mvvm.spread.TAG
 
 
 /**
@@ -54,7 +57,12 @@ class BaseRemoteSubscriber<T>(
                 baseViewModel.showToast("服务器返回数据格式异常")
 
             } else if (e is ServerResultException) {
+                if ((e as ServerResultException).errorCode == HttpCode.CODE_TOKEN_REFRESH_ERROR) {
+                    baseViewModel.handlerTokenRenew()
+                }
                 baseViewModel.logicErrorShowToast((e as ServerResultException).errorMessage)
+            } else if (e is TokenInvalidException) {
+                baseViewModel.handleTokenInvalid((e as TokenInvalidException).errorMessage)
             } else
                 baseViewModel.showToast("服务器返回异常:" + e.message)
         }

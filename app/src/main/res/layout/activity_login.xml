@@ -30,6 +30,12 @@
             app:tb_leftImageResource="@drawable/back1"
             app:tb_titleText="这是一个Title"
             app:tb_titleTextSize="18dp" />
+        <Button
+            android:id="@+id/call_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="callTest"
+            android:text="调用测试" />
 
         <Button
             android:id="@+id/button"

@@ -13,6 +13,8 @@ import java.util.concurrent.ConcurrentHashMap
 object HeaderInterceptor : Interceptor {
     private val headerMap: ConcurrentHashMap<String, String> = ConcurrentHashMap()
 
+    var TOKEN_NAME = "Authorization"
+
     fun addHeader(name: String, value: String) {
         headerMap[name] = value
     }

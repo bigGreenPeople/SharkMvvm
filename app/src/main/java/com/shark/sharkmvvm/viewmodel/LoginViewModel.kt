@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.shark.mvvm.retrofit.interceptor.HeaderInterceptor
 import com.shark.mvvm.service.Service
 import com.shark.mvvm.spread.TAG
 import com.shark.mvvm.viewmodel.BaseViewModel
@@ -42,9 +43,14 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
 
     lateinit var testList: List<String>
     fun test() {
-        call(userService.login("001", "12d3456")) {
-            testList.size
+        call(userService.login("pda", "123456")) { token ->
+            HeaderInterceptor.addHeader(HeaderInterceptor.TOKEN_NAME, token)
         }
     }
 
+    fun callTest() {
+        call(userService.test()) {
+            Log.e(TAG, "callTest: $it")
+        }
+    }
 }

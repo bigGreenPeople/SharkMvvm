@@ -96,6 +96,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //注入ViewModel值
+        ActivityManager.addActivity(this)
         injectionViewModel()
 
         sharkActivity?.let {

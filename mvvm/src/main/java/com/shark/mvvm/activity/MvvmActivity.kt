@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import com.shark.mvvm.event.CleanModel
+import com.shark.mvvm.utils.AppSetting
 import com.shark.mvvm.viewmodel.BaseActionEvent
 import com.shark.mvvm.viewmodel.BaseViewModel
 import com.shark.mvvm.viewmodel.SharkViewModel
@@ -67,6 +68,15 @@ abstract class MvvmActivity : BaseActivity() {
                         BaseActionEvent.LOGIC_ERROR -> {
                             cleanEdit()
                             showToast(baseActionEvent.message)
+                        }
+                        BaseActionEvent.Token_Invalid -> {
+                            info(baseActionEvent.message ?: "Token_Invalid")
+                            // 关闭所有页面
+//                            ActivityManager.finishAllActivity()
+                            // 打开主界面
+//                            startActivity(LoginActivity::class.java)
+                            //重新启动app
+                            AppSetting.restartApp()
                         }
                         BaseActionEvent.DISMISS_LOADING_DIALOG -> {
                             if (cleanEdit == CleanModel.ALWAYS) {
