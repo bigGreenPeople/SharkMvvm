@@ -1,5 +1,7 @@
 package com.shark.mvvm.viewmodel
 
+import com.shark.mvvm.exception.TokenInvalidException
+
 /**
  * 此类用于抽象消息
  * @property action Int
@@ -26,6 +28,7 @@ class BaseActionEvent(action: Int) : BaseEvent(action) {
         val FINISH = 4
         val FINISH_WITH_RESULT_OK = 5
         val LOGIC_ERROR = 6
+        val Token_Invalid = 7
     }
 
     var message: String? = null

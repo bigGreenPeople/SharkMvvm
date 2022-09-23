@@ -17,4 +17,10 @@ interface UserService {
         @Field("password") password: String,
     ): Observable<RequestModel<String>>
 
+
+    @GET("sysUser/test")
+    fun test(
+    ): Observable<RequestModel<String>>
+
+
 }
