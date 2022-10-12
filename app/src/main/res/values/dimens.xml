@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 自定义的字体大小统一使用job_前缀 方便管理 From ZDK-->
+    <dimen name="text_size_10">10sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_13">13sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_15">15sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_17">17sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="text_size_19">19sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+    <dimen name="text_size_22">22sp</dimen>
+    <dimen name="text_size_23">23sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
+    <dimen name="text_size_25">25sp</dimen>
+    <dimen name="text_size_28">28sp</dimen>
+    <dimen name="text_size_30">30sp</dimen>
+    <dimen name="text_size_34">34sp</dimen>
+    <dimen name="text_size_35">35sp</dimen>
+    <dimen name="text_size_36">36sp</dimen>
+    <dimen name="text_size_40">40sp</dimen>
+    <dimen name="text_size_45">45sp</dimen>
+    <dimen name="text_size_50">50sp</dimen>
+    <dimen name="text_size_60">60sp</dimen>
+    <dimen name="text_size_70">70sp</dimen>
+    <dimen name="text_size_80">80sp</dimen>
+
+
+    <dimen name="dp_70">70dp</dimen>
+    <dimen name="activity_horizontal_margin">12dp</dimen>
+    <dimen name="activity_vertical_margin">12dp</dimen>
+
+    <dimen name="block_low_width">40dp</dimen>
+    <dimen name="block_low_height">8dp</dimen>
+    <dimen name="block_high_width">20dp</dimen>
+    <dimen name="block_high_height">196dp</dimen>
+
+    <dimen name="radius_16">16dp</dimen>
+    <dimen name="spacing_16">16dp</dimen>
+
+    <dimen name="list_divider_height_negative">-1px</dimen>
+
+
+    <!-- Utils 系列界面 -->
+
+    <!-- ColorUtils 颜色工具 -->
+    <dimen name="color_utils_square_length">46dp</dimen>
+    <dimen name="color_utils_square_margin">23dp</dimen>
+    <dimen name="color_utils_square_desc_marginTop">10dp</dimen>
+
+    <!-- DrawableUtils Drawable 工具 -->
+    <dimen name="drawable_utils_column_marginBottom">35dp</dimen>
+    <dimen name="drawable_utils_item_marginHorizontal">20dp</dimen>
+    <dimen name="drawable_utils_common_shape_size">50dp</dimen>
+
+    <!-- Expands 系列界面 -->
+
+    <dimen name="custom_section_height">36dp</dimen>
+    <dimen name="spacing_24dp">24dp</dimen>
+    <dimen name="common_icon_size">24dp</dimen>
+    <dimen name="selection_item_height">60dp</dimen>
+
+    <dimen name="config_margin_4dp">4dp</dimen>
+    <dimen name="config_margin_5dp">5dp</dimen>
+    <dimen name="config_margin_6dp">6dp</dimen>
+    <dimen name="config_margin_8dp">8dp</dimen>
+    <dimen name="config_margin_10dp">10dp</dimen>
+    <dimen name="config_margin_12dp">12dp</dimen>
+    <dimen name="config_margin_14dp">14dp</dimen>
+    <dimen name="config_margin_16dp">16dp</dimen>
+    <dimen name="config_margin_18dp">18dp</dimen>
+    <dimen name="config_margin_20dp">20dp</dimen>
+    <dimen name="config_margin_24dp">24dp</dimen>
+    <dimen name="config_margin_30dp">30dp</dimen>
+
+    <dimen name="config_padding_4dp">4dp</dimen>
+    <dimen name="config_padding_5dp">5dp</dimen>
+    <dimen name="config_padding_6dp">6dp</dimen>
+    <dimen name="config_padding_8dp">8dp</dimen>
+    <dimen name="config_padding_10dp">10dp</dimen>
+    <dimen name="config_padding_12dp">12dp</dimen>
+    <dimen name="config_padding_14dp">14dp</dimen>
+    <dimen name="config_padding_16dp">16dp</dimen>
+    <dimen name="config_padding_18dp">18dp</dimen>
+    <dimen name="config_padding_20dp">20dp</dimen>
+    <dimen name="config_padding_24dp">24dp</dimen>
+    <dimen name="config_padding_30dp">30dp</dimen>
+
+</resources>
