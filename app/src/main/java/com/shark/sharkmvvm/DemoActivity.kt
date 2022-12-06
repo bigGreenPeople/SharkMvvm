@@ -17,7 +17,7 @@ class DemoActivity : MvvmActivity() {
     lateinit var viewModel: DemoViewModel
 
     override fun initView() {
-        Log.i(TAG, "DemoActivity init")
+        Log.i(TAG, "DemoActiv ity init")
 
         mDataBinding.viewModel = viewModel
     }
