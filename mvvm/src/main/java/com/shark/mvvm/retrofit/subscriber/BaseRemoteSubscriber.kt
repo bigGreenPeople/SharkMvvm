@@ -70,10 +70,10 @@ class BaseRemoteSubscriber<T>(
 
     override fun onComplete() {
         try {
-            Log.i(TAG, "onComplete: -------------------------------")
+//            Log.i(TAG, "ClassCastException: -------------------------------")
             if (!isExecute) requestCallback?.onSuccess("" as T)
         } catch (e: ClassCastException) {
-            requestCallback?.onSuccess(null)
+//            requestCallback?.onSuccess(null)
         }
     }
 }
