@@ -92,6 +92,10 @@ object RetrofitManagement {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(Function<M, ObservableSource<out T>> { result: M ->
+                    if (HttpCode.CODE_SUCCESS_LIST.contains(result.type)){
+                        return@Function createData(result.data)
+                    }
+
                     when (result.type) {
                         HttpCode.CODE_SUCCESS -> {
                             //如果成功则创建数据被观察者
