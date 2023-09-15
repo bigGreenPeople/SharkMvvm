@@ -126,6 +126,47 @@ object RetrofitManagement {
         }
     }
 
+
+    fun <T, M : BaseRequestModel<T>> applySchedulers2(): ObservableTransformer<M, M>? {
+        return ObservableTransformer<M, M> { observable: Observable<M> ->
+            observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(Function<M, ObservableSource<out M>> { result: M ->
+                    if (HttpCode.CODE_SUCCESS_LIST.contains(result.type)){
+                        return@Function createData(result)
+                    }
+
+                    when (result.type) {
+                        HttpCode.CODE_SUCCESS -> {
+                            //如果成功则创建数据被观察者
+                            return@Function createData(result)
+                        }
+                        HttpCode.CODE_TOKEN_REFRESH_SUCCESS -> {
+                            //调用刷新token接口
+                            reCall()
+                            return@Function createData(result)
+                        }
+                        HttpCode.CODE_TOKEN_INVALID -> {
+                            throw TokenInvalidException(errorMessage = result.msg)
+                        }
+                        HttpCode.CODE_TOKEN_REFRESH_ERROR -> {
+                            throw ServerResultException(
+                                HttpCode.CODE_TOKEN_REFRESH_ERROR,
+                                result.msg
+                            )
+                        }
+                        else -> {
+                            throw ServerResultException(
+                                result.type,
+                                result.msg
+                            )
+                        }
+                    }
+                })
+        }
+    }
+
     //刷新接口
     fun reCall() {
         val userService = getService(UserService::class.java)
@@ -157,6 +198,8 @@ object RetrofitManagement {
             }
         }
     }
+
+
 
     /**
      * 获取服务的接口 直接使用配置总的url

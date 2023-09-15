@@ -49,6 +49,18 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    open fun <T, M : BaseRequestModel<T>> callRequest(
+        observable: Observable<M>,
+        isDismiss: Boolean = true,
+        isLoad: Boolean = true,
+        failCallback: ((e: BaseException?) -> Unit)? = null,
+        successCallback: ((result: M) -> Unit)? = null
+    ) {
+        dataSource.executeRequest(observable, isDismiss, isLoad, failCallback) { result ->
+            successCallback?.invoke(result)
+        }
+    }
+
     init {
         actionLiveData = MutableLiveData()
 
