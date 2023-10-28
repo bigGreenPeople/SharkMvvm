@@ -12,9 +12,19 @@ import retrofit2.http.*
  */
 interface AppService {
 
+    /**
+     * 上次日志信息
+     * @param androidCrash AndroidCrash
+     * @return Observable<RequestModel<String>>
+     */
     @POST("crash/addCrash")
     fun addCrash(@Body androidCrash: AndroidCrash): Observable<RequestModel<String>>
 
+    /**
+     * 上次日志文件
+     * @param file Part
+     * @return Observable<RequestModel<String>>
+     */
     @Multipart
     @POST("file/errorFile")
     fun errorFileUpload(@Part file: MultipartBody.Part): Observable<RequestModel<String>>

@@ -3,6 +3,8 @@ package com.shark.mvvm.config
 object HttpCode {
     var CODE_SUCCESS = "0"
 
+    var CODE_SUCCESS_LIST = arrayListOf<String>("0")
+
     var CODE_UNKNOWN = "-1"
 
     var CODE_TOKEN_INVALID = "-2"

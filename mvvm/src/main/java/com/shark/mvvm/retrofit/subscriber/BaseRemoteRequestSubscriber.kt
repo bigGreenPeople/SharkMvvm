@@ -12,6 +12,7 @@ import com.shark.mvvm.exception.TokenInvalidException
 
 import com.shark.mvvm.retrofit.callback.RequestCallback
 import com.shark.mvvm.retrofit.callback.RequestMultiplyCallback
+import com.shark.mvvm.retrofit.model.BaseRequestModel
 import com.shark.mvvm.retrofit.model.RequestModel
 import com.shark.mvvm.spread.TAG
 
@@ -20,17 +21,17 @@ import com.shark.mvvm.spread.TAG
  * 订阅者 或者叫 监听者 (一次请求会创建一个BaseRemoteSubscriber)
  * @param T
  */
-class BaseRemoteSubscriber<T>(
+class BaseRemoteRequestSubscriber<T, M: BaseRequestModel<T>>(
     private val baseViewModel: BaseViewModel,
-    var requestCallback: RequestCallback<T>? = null
-) : DisposableObserver<T>() {
+    var requestCallback: RequestCallback<M>? = null
+) : DisposableObserver<M>() {
     /**
      * 查看是否执行了任一onNext或者onError
      */
     var isExecute: Boolean = false
 
     //成功执行设置的回调
-    override fun onNext(t: T) {
+    override fun onNext(t: M) {
         isExecute = true
         requestCallback?.onSuccess(t)
     }
@@ -71,7 +72,7 @@ class BaseRemoteSubscriber<T>(
     override fun onComplete() {
         try {
 //            Log.i(TAG, "ClassCastException: -------------------------------")
-            if (!isExecute) requestCallback?.onSuccess("" as T)
+            if (!isExecute) requestCallback?.onSuccess("" as M)
         } catch (e: ClassCastException) {
 //            requestCallback?.onSuccess(null)
         }

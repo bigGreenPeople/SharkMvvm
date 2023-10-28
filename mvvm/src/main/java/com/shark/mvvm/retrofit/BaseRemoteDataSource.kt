@@ -5,6 +5,7 @@ import com.shark.mvvm.viewmodel.BaseViewModel
 import com.shark.mvvm.retrofit.callback.RequestCallback
 import com.shark.mvvm.retrofit.callback.RequestMultiplyCallback
 import com.shark.mvvm.retrofit.model.BaseRequestModel
+import com.shark.mvvm.retrofit.subscriber.BaseRemoteRequestSubscriber
 import com.shark.mvvm.retrofit.subscriber.BaseRemoteSubscriber
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -50,6 +51,10 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
         return RetrofitManagement.applySchedulers()
     }
 
+    open fun <T, M : BaseRequestModel<T>> applySchedulers2(): ObservableTransformer<M, M>? {
+        return RetrofitManagement.applySchedulers2()
+    }
+
     /**
      * 调用完网络接口后会获得Observable对象
      * 这里我们将baseViewModel 和 callback封装为BaseRemoteSubscriber订阅者
@@ -78,18 +83,20 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
         var callback: RequestCallback<T>? = null
         if (failCallback == null) {
             callback = object : RequestCallback<T> {
-                override fun onSuccess(t: T) {
-                    successCallback?.invoke(t)
+
+                override fun onSuccess(t: T?) {
+                    t?.let { successCallback?.invoke(t) }
                 }
             }
         } else {
             callback = object : RequestMultiplyCallback<T> {
-                override fun onSuccess(t: T) {
-                    successCallback?.invoke(t)
-                }
 
                 override fun onFail(e: BaseException?) {
                     failCallback?.invoke(e)
+                }
+
+                override fun onSuccess(t: T?) {
+                    t?.let { successCallback?.invoke(t) }
                 }
             }
         }
@@ -98,6 +105,49 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
         execute(
             observable,
             BaseRemoteSubscriber(baseViewModel, callback),
+            isDismiss,
+            isLoad
+        )
+    }
+
+
+    /**
+     * 表达式支持
+     * @param observable Observable<BaseRequestModel<T>>
+     * @param callback Function1<[@kotlin.ParameterName] T, Unit>?
+     */
+    open fun <T, M : BaseRequestModel<T>> executeRequest(
+        observable: Observable<M>,
+        isDismiss: Boolean = true,
+        isLoad: Boolean = true,
+        failCallback: ((e: BaseException?) -> Unit)? = null,
+        successCallback: ((result: M) -> Unit)? = null
+    ) {
+        var callback: RequestCallback<M>? = null
+        if (failCallback == null) {
+            callback = object : RequestCallback<M> {
+
+                override fun onSuccess(t: M?) {
+                    t?.let { successCallback?.invoke(t) }
+                }
+            }
+        } else {
+            callback = object : RequestMultiplyCallback<M> {
+
+                override fun onFail(e: BaseException?) {
+                    failCallback?.invoke(e)
+                }
+
+                override fun onSuccess(t: M?) {
+                    t?.let { successCallback?.invoke(t) }
+                }
+            }
+        }
+
+
+        executeRequest(
+            observable,
+            BaseRemoteRequestSubscriber(baseViewModel, callback),
             isDismiss,
             isLoad
         )
@@ -143,6 +193,25 @@ abstract class BaseRemoteDataSource(private val baseViewModel: BaseViewModel) {
                         isLoad
                     )
                 )
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(observer) as Disposable
+        )
+    }
+
+
+    open fun <T, M : BaseRequestModel<T>> executeRequest(
+        observable: Observable<M>,
+        observer: Observer<M>,
+        isDismiss: Boolean,
+        isLoad: Boolean = true
+    ) {
+        addDisposable(
+            observable
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(applySchedulers2())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(observer) as Disposable
         )
