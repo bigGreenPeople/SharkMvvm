@@ -1,6 +1,7 @@
 package com.shark.sharkmvvm
 
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import com.shark.mvvm.activity.MvvmActivity
 import com.shark.mvvm.activity.SharkActivity
@@ -33,9 +34,20 @@ class DemoActivity : MvvmActivity() {
         Log.i(TAG, "et_scan: $code")
     }
 
-    @ScanEvent(code = 523)
-    fun scan(code: String) {
-        Log.i(TAG, "scan: $code")
+    @ScanEvent(id = R.id.et_scan, action = KeyEvent.ACTION_DOWN)
+    fun scanCodeDown(code: String) {
+        //TODO 你的业务操作
+        Log.i(TAG, "scanCodeDown: $code")
+    }
+
+    @ScanEvent(code = 523, action = KeyEvent.ACTION_DOWN)
+    fun scanDown(code: String) {
+        Log.i(TAG, "scanDown: $code")
+    }
+
+    @ScanEvent(code = 523, action = KeyEvent.ACTION_UP)
+    fun scanUp(code: String) {
+        Log.i(TAG, "scanUp: $code")
     }
 
     @ScanEvent(id = R.id.et_scan2, clean = CleanModel.ALWAYS, code = 523)

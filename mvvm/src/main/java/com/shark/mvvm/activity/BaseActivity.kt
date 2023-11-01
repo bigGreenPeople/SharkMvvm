@@ -238,9 +238,12 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
      * @return
      */
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+
         for (scanEventInfo in listScanEventInfo) {
             if (event!!.action == scanEventInfo.scanEvent.action) {
-
+//                if (event!!.keyCode == 523) {
+//                    Log.i(TAG, "dispatchKeyEvent: ${event.keyCode}:${event.action}")
+//                }
                 //都不符合所有扫描键提前退出
                 if (event.keyCode != scanEventInfo.scanEvent.code
                     && !ScanConfig.keySet.contains(event.keyCode)
@@ -275,7 +278,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
 
                     //TODO 这里要做一个锁 如果锁是锁住的状态就不做处理 如果锁不是锁住的状态就做处理 (由于时间问题我们暂时使用Volatile变量来处理这个问题)
                     //防止\n两次扫描事件触发 也防止快速扫描多次
-                    if (preEvent != null && event.eventTime - preEvent!!.eventTime < 500) {
+                    if (preEvent != null && event.action == preEvent?.action && event.eventTime - preEvent!!.eventTime < 500) {
                         continue
                     }
                     preEvent = event
@@ -290,6 +293,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
                     }
                     //指定了code 执行此处
                     scanEventInfo.scanFun.invoke(scanEventInfo.objectThis, focusViewText)
+                    break
                 }
             }
         }
@@ -303,6 +307,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
     //上一个KeyEvent
     @Volatile
     public var preEvent: KeyEvent? = null
+
 
     //请求清除编辑框标识
     @Volatile
