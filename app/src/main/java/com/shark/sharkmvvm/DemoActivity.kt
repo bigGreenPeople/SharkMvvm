@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import com.shark.mvvm.activity.MvvmActivity
 import com.shark.mvvm.activity.SharkActivity
+import com.shark.mvvm.event.CleanModel
 import com.shark.mvvm.event.ScanEvent
 import com.shark.mvvm.viewmodel.SharkViewModel
 import com.shark.sharkmvvm.databinding.ActivityDemoBinding
@@ -29,7 +30,18 @@ class DemoActivity : MvvmActivity() {
     @ScanEvent(id = R.id.et_scan)
     fun scanCode(code: String) {
         //TODO 你的业务操作
-        Log.i(TAG, code)
+        Log.i(TAG, "et_scan: $code")
+    }
+
+    @ScanEvent(code = 523)
+    fun scan(code: String) {
+        Log.i(TAG, "scan: $code")
+    }
+
+    @ScanEvent(id = R.id.et_scan2, clean = CleanModel.ALWAYS, code = 523)
+    fun scanCode2(code: String) {
+        //TODO 你的业务操作
+        Log.i(TAG, "et_scan2: $code")
     }
 
 
@@ -44,4 +56,6 @@ class DemoActivity : MvvmActivity() {
     fun jumpPage(view: View) {
         jumpActivity(LoginActivity::class.java)
     }
+
+
 }

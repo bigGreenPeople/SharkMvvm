@@ -137,8 +137,8 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
      * 设置键盘出现移动布局
      */
     private fun keyBoardMove() {
-        val keyBoardMove = this::class.annotations.find { it is KeyBoardMove }
-            ?.let { it as KeyBoardMove }
+        val keyBoardMove =
+            this::class.annotations.find { it is KeyBoardMove }?.let { it as KeyBoardMove }
         //如果标注了KeyBoardMove注解设置移动事件
         keyBoardMove?.let {
             //弹出软键盘时页面显示控制
@@ -188,8 +188,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
                 if (layoutId == 0) {
                     //获取R.layout.id
                     val idName = StringUtils.underscoreName(
-                        it.type.simpleName.replace("Binding", "")
-                            .replace("Impl", "")
+                        it.type.simpleName.replace("Binding", "").replace("Impl", "")
                     )
                     val genLayoutId: Int = resources.getIdentifier(idName, "layout", packageName)
 
@@ -239,39 +238,64 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
      * @return
      */
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        if (event!!.action == KeyEvent.ACTION_UP && ScanConfig.keySet.contains(event.keyCode)) {
-            val focusView =
-                window.decorView.findFocus() as? TextView ?: return super.dispatchKeyEvent(event)
-            //检测是否是可读文本控件
-            val focusViewText = focusView.text.toString()
-            //检测文本是否为空
-            if (TextUtils.isEmpty(focusViewText) || focusViewText.trim { it <= ' ' }.isEmpty())
-                return super.dispatchKeyEvent(event)
+        for (scanEventInfo in listScanEventInfo) {
+            if (event!!.action == scanEventInfo.scanEvent.action) {
 
-            // viewMode相关事件调用
-            listScanEventInfo.forEach {
-                if (it.scanEvent.id == 0 || focusView.id == it.scanEvent.id) {
+                //都不符合所有扫描键提前退出
+                if (event.keyCode != scanEventInfo.scanEvent.code
+                    && !ScanConfig.keySet.contains(event.keyCode)
+                ) continue
+
+                //获取当前焦点的文本 如果没有则返回空字符串
+                val focusView = window.decorView.findFocus() as? TextView
+
+                // 指定了扫描文本框 如果与对应焦点文本框不一致也退出
+                if (scanEventInfo.scanEvent.id != 0 && focusView?.id != scanEventInfo.scanEvent.id) continue
+
+                //检测是否是可读文本控件
+                val focusViewText = focusView?.text.toString()
+                //检测文本是否为空
+                if (!scanEventInfo.scanEvent.scanNull) {
+                    if (TextUtils.isEmpty(focusViewText) || focusViewText.trim { it <= ' ' }
+                            .isEmpty()) continue
+                }
+
+                if ((scanEventInfo.scanEvent.code != 0 && event.keyCode == scanEventInfo.scanEvent.code)
+                    || (scanEventInfo.scanEvent.code == 0 && ScanConfig.keySet.contains(event.keyCode))
+                ) {
+                    //判断是否有更匹配id的event 方法
+                    val findScanEventInfo =
+                        listScanEventInfo.find {
+                            it.scanEvent.id == focusView?.id
+                                    && it.scanEvent.action == event.action
+                                    && (it.scanEvent.code == 0 || it.scanEvent.code == event.keyCode)
+                        }
+                    //最匹配的不是当前的就先跳过 下一轮最匹配的才执行
+                    if (findScanEventInfo != null && findScanEventInfo != scanEventInfo) continue
+
                     //TODO 这里要做一个锁 如果锁是锁住的状态就不做处理 如果锁不是锁住的状态就做处理 (由于时间问题我们暂时使用Volatile变量来处理这个问题)
                     //防止\n两次扫描事件触发 也防止快速扫描多次
                     if (preEvent != null && event.eventTime - preEvent!!.eventTime < 500) {
-                        return@forEach
+                        continue
                     }
                     preEvent = event
 
                     //判断此次扫描事件是否要时清除编辑框
-                    if (it.scanEvent.clean != CleanModel.NEVER) {
-                        cleanEdit = it.scanEvent.clean
-                        cleanId = it.scanEvent.id
+                    if (scanEventInfo.scanEvent.clean != CleanModel.NEVER) {
+                        cleanEdit = scanEventInfo.scanEvent.clean
+                        cleanId = scanEventInfo.scanEvent.id
                     } else {
-                        cleanEdit = it.scanEvent.clean
+                        cleanEdit = scanEventInfo.scanEvent.clean
                         cleanId = null
                     }
-                    it.scanFun.invoke(it.objectThis, focusViewText)
+                    //指定了code 执行此处
+                    scanEventInfo.scanFun.invoke(scanEventInfo.objectThis, focusViewText)
                 }
             }
         }
 
-        if (ScanConfig.closeSystemKeySet.contains(event.keyCode)) return false
+
+        if (ScanConfig.closeSystemKeySet.contains(event?.keyCode)) return false
 
         return super.dispatchKeyEvent(event)
     }
@@ -340,39 +364,29 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
         confirm: String = "好的",
         isSelected: Boolean = true
     ) {
-        MaterialDialog.Builder(this)
-            .iconRes(R.drawable.icon_tip)
-            .title(titleText)
-            .content(content)
-            .positiveText(confirm)
-            .onPositive { _, _ ->
-                val focusView =
-                    window.decorView.findFocus() as? EditText
+        MaterialDialog.Builder(this).iconRes(R.drawable.icon_tip).title(titleText).content(content)
+            .positiveText(confirm).onPositive { _, _ ->
+                val focusView = window.decorView.findFocus() as? EditText
                 if (isSelected) focusView?.selectAll()
-            }
-            .show()
+            }.show()
     }
 
 
     fun info(
-        message: String,
-        isSelected: Boolean = false
+        message: String, isSelected: Boolean = false
     ) {
         XToastUtils.info(message)
         if (isSelected) {
-            val focusView =
-                window.decorView.findFocus() as? EditText
+            val focusView = window.decorView.findFocus() as? EditText
             focusView?.selectAll()
         }
     }
 
     fun error(
-        message: String,
-        isSelected: Boolean = true
+        message: String, isSelected: Boolean = true
     ) {
         XToastUtils.error(message)
-        val focusView =
-            window.decorView.findFocus() as? EditText
+        val focusView = window.decorView.findFocus() as? EditText
         if (isSelected) focusView?.selectAll()
     }
 
@@ -395,21 +409,15 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
         cancelClick: (() -> Unit)? = null,
         okClick: (() -> Unit)? = null
     ) {
-        MaterialDialog.Builder(this)
-            .iconRes(R.drawable.icon_warning)
-            .title(titleText)
-            .content(content)
-            .positiveText(confirm)
-            .negativeText(cancel)
+        MaterialDialog.Builder(this).iconRes(R.drawable.icon_warning).title(titleText)
+            .content(content).positiveText(confirm).negativeText(cancel)
             .onNegative { dialog, which ->
                 cancelClick?.invoke()
             }.onPositive { dialog, which ->
                 okClick?.invoke()
-                val focusView =
-                    window.decorView.findFocus() as? EditText
+                val focusView = window.decorView.findFocus() as? EditText
                 if (isSelected) focusView?.selectAll()
-            }
-            .show()
+            }.show()
     }
 
     /**
