@@ -50,11 +50,11 @@ class DemoActivity : MvvmActivity() {
         Log.i(TAG, "scanUp: $code")
     }
 
-    @ScanEvent(id = R.id.et_scan2, clean = CleanModel.ALWAYS, code = 523)
-    fun scanCode2(code: String) {
-        //TODO 你的业务操作
-        Log.i(TAG, "et_scan2: $code")
-    }
+//    @ScanEvent(id = R.id.et_scan2, clean = CleanModel.ALWAYS, code = 523)
+//    fun scanCode2(code: String) {
+//        //TODO 你的业务操作
+//        Log.i(TAG, "et_scan2: $code")
+//    }
 
 
     fun successCall(view: View) {
