@@ -65,10 +65,12 @@ abstract class MvvmActivity : BaseActivity() {
                         BaseActionEvent.SHOW_LOADING_DIALOG -> {
                             startLoading(baseActionEvent.message)
                         }
+
                         BaseActionEvent.LOGIC_ERROR -> {
                             cleanEdit()
                             showToast(baseActionEvent.message)
                         }
+
                         BaseActionEvent.Token_Invalid -> {
                             info(baseActionEvent.message ?: "Token_Invalid")
                             // 关闭所有页面
@@ -76,14 +78,20 @@ abstract class MvvmActivity : BaseActivity() {
                             // 打开主界面
 //                            startActivity(LoginActivity::class.java)
                             //重新启动app
-                            AppSetting.restartApp()
+
+                            Thread {
+                                Thread.sleep(2000)
+                                AppSetting.restartApp()
+                            }.start()
                         }
+
                         BaseActionEvent.DISMISS_LOADING_DIALOG -> {
                             if (cleanEdit == CleanModel.ALWAYS) {
                                 cleanEdit()
                             }
                             dismissLoading()
                         }
+
                         BaseActionEvent.SHOW_TOAST -> showToast(baseActionEvent.message)
                         BaseActionEvent.FINISH -> finish()
                         BaseActionEvent.FINISH_WITH_RESULT_OK -> {
