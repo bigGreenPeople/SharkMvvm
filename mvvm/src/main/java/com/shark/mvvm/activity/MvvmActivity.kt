@@ -9,6 +9,7 @@ import com.shark.mvvm.utils.AppSetting
 import com.shark.mvvm.viewmodel.BaseActionEvent
 import com.shark.mvvm.viewmodel.BaseViewModel
 import com.shark.mvvm.viewmodel.SharkViewModel
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog
 import com.zyao89.view.zloading.ZLoadingDialog
 import com.zyao89.view.zloading.Z_TYPE
 import java.lang.RuntimeException
@@ -79,10 +80,19 @@ abstract class MvvmActivity : BaseActivity() {
 //                            startActivity(LoginActivity::class.java)
                             //重新启动app
 
-                            Thread {
-                                Thread.sleep(2000)
-                                AppSetting.restartApp()
-                            }.start()
+                            MaterialDialog.Builder(this)
+                                .content("登录过期,即将退出,请重新登录")
+                                .positiveText("确认")
+                                .cancelable(false)
+                                .onPositive { dialog, which ->
+                                    AppSetting.restartApp()
+                                }
+                                .show()
+
+//                            Thread {
+//                                Thread.sleep(2000)
+//                                AppSetting.restartApp()
+//                            }.start()
                         }
 
                         BaseActionEvent.DISMISS_LOADING_DIALOG -> {
