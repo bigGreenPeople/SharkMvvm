@@ -24,6 +24,7 @@ import com.shark.mvvm.event.ScanEventInfo
 import com.shark.mvvm.eventbus.EventBusEnabledHandler
 import com.shark.mvvm.utils.StringUtils
 import com.shark.mvvm.utils.XToastUtils
+import com.shark.mvvm.utils.schedule
 import com.shark.mvvm.view.TitleListener
 import com.shark.mvvm.viewmodel.SharkViewModel
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction
@@ -367,9 +368,29 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
         titleText: String = "提示",
         content: String = "",
         confirm: String = "好的",
-        isSelected: Boolean = true
+        isSelected: Boolean = true,
+        time: Long = 0L
     ) {
         MaterialDialog.Builder(this).iconRes(R.drawable.icon_tip).title(titleText).content(content)
+            .showListener { dialog ->
+                if (dialog is MaterialDialog) {
+                    dialog as MaterialDialog
+                    var timeTmp = time
+                    if (timeTmp != 0L) {
+                        schedule { timer ->
+                            dialog.setTitle("$titleText (${timeTmp}s)")
+
+                            if (timeTmp == 0L) {
+                                timer.cancel()
+                                dialog.dismiss()
+                            }
+                            timeTmp -= 1
+                        }
+                    }
+
+
+                }
+            }
             .positiveText(confirm).onPositive { _, _ ->
                 val focusView = window.decorView.findFocus() as? EditText
                 if (isSelected) focusView?.selectAll()
