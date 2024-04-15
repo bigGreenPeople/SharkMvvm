@@ -371,18 +371,23 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
         isSelected: Boolean = true,
         time: Long = 0L
     ) {
-        MaterialDialog.Builder(this).iconRes(R.drawable.icon_tip).title(titleText).content(content)
+        MaterialDialog.Builder(this).iconRes(R.drawable.icon_tip).title(titleText)
+            .content(content)
             .showListener { dialog ->
                 if (dialog is MaterialDialog) {
                     dialog as MaterialDialog
                     var timeTmp = time
                     if (timeTmp != 0L) {
                         schedule { timer ->
-                            dialog.setTitle("$titleText (${timeTmp}s)")
-
+                            runOnUiThread {
+                                dialog.setTitle("$titleText (${timeTmp}s)")
+                            }
                             if (timeTmp == 0L) {
-                                timer.cancel()
-                                dialog.dismiss()
+                                runOnUiThread {
+                                    timer.cancel()
+                                    dialog.dismiss()
+                                }
+
                             }
                             timeTmp -= 1
                         }
@@ -395,6 +400,7 @@ open class BaseActivity : AppCompatActivity(), TitleListener {
                 val focusView = window.decorView.findFocus() as? EditText
                 if (isSelected) focusView?.selectAll()
             }.show()
+
     }
 
 
