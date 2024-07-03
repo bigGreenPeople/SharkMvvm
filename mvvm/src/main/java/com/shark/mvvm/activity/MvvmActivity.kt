@@ -136,7 +136,7 @@ abstract class MvvmActivity : BaseActivity() {
 
     protected open fun showToast(message: String?, titleText: String = "提示") {
 //        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        message?.let { alertDialog(titleText, it) }
+        message?.let { alertDialog(titleText, it, time = 5) }
     }
 
     protected open fun finishWithResultOk() {
