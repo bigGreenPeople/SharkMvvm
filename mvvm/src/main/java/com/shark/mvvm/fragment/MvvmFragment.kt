@@ -125,6 +125,7 @@ open class MvvmFragment : BaseFragment() {
     protected open fun showToast(message: String?) {
 //        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         val baseActivity = activity as BaseActivity
-        message?.let { baseActivity.alertDialog(it) }
+        message?.let { baseActivity.alertDialog(it, time = 5) }
+
     }
 }
