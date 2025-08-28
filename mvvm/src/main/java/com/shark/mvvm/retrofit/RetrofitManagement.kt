@@ -92,7 +92,7 @@ object RetrofitManagement {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(Function<M, ObservableSource<out T>> { result: M ->
-                    if (HttpCode.CODE_SUCCESS_LIST.contains(result.type)){
+                    if (HttpCode.CODE_SUCCESS_LIST.contains(result.type)) {
                         return@Function createData(result.data)
                     }
 
@@ -101,21 +101,26 @@ object RetrofitManagement {
                             //如果成功则创建数据被观察者
                             return@Function createData(result.data)
                         }
+
                         HttpCode.CODE_TOKEN_REFRESH_SUCCESS -> {
                             //调用刷新token接口
                             reCall()
                             return@Function createData(result.data)
                         }
+
                         HttpCode.CODE_TOKEN_INVALID -> {
                             throw TokenInvalidException(errorMessage = result.msg)
                         }
+
                         HttpCode.CODE_TOKEN_REFRESH_ERROR -> {
                             throw ServerResultException(
                                 HttpCode.CODE_TOKEN_REFRESH_ERROR,
                                 result.msg
                             )
                         }
+
                         else -> {
+                            Log.i(TAG, "result.msg: ${result.msg}")
                             throw ServerResultException(
                                 result.type,
                                 result.msg
@@ -133,7 +138,7 @@ object RetrofitManagement {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(Function<M, ObservableSource<out M>> { result: M ->
-                    if (HttpCode.CODE_SUCCESS_LIST.contains(result.type)){
+                    if (HttpCode.CODE_SUCCESS_LIST.contains(result.type)) {
                         return@Function createData(result)
                     }
 
@@ -142,20 +147,24 @@ object RetrofitManagement {
                             //如果成功则创建数据被观察者
                             return@Function createData(result)
                         }
+
                         HttpCode.CODE_TOKEN_REFRESH_SUCCESS -> {
                             //调用刷新token接口
                             reCall()
                             return@Function createData(result)
                         }
+
                         HttpCode.CODE_TOKEN_INVALID -> {
                             throw TokenInvalidException(errorMessage = result.msg)
                         }
+
                         HttpCode.CODE_TOKEN_REFRESH_ERROR -> {
                             throw ServerResultException(
                                 HttpCode.CODE_TOKEN_REFRESH_ERROR,
                                 result.msg
                             )
                         }
+
                         else -> {
                             throw ServerResultException(
                                 result.type,
@@ -198,7 +207,6 @@ object RetrofitManagement {
             }
         }
     }
-
 
 
     /**
